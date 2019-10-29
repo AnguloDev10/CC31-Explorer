@@ -3,7 +3,7 @@
 #include "Archivo.hpp"
 #include "Lambdas.hpp"
 #include <string>
-#include <time.h>
+#include <ctime>
 #include <vector>
 #include <filesystem>
 #include <functional>
@@ -13,6 +13,7 @@ using namespace experimental::filesystem;
 typedef Tree<Archivo*, string, nullptr> TreeName;
 typedef Tree<Archivo*, string, nullptr> TreeExt;
 typedef Tree<Archivo*, long long, nullptr> TreeSize;
+typedef Tree<Archivo*, string, nullptr>TreeDate;
 
 
 
@@ -37,12 +38,13 @@ namespace Project1 {
 
 		TreeName* nameTree;
 		TreeExt* extTree;
+		TreeDate* dattree;
 	private: System::Windows::Forms::Label^  Cant_Elem;
 	private: System::Windows::Forms::ImageList^  imageList1;
 			 TreeSize *sizTree;
-	
-		
-		
+
+
+
 
 	public:
 		FileExplorer(void)
@@ -51,13 +53,14 @@ namespace Project1 {
 			//
 			//TODO: agregar código de constructor aquí
 			//
-			
-			
+
+
 			caracteres = gcnew String("");
 			mylambdas = new LAMBDITA();
 			nameTree = new TreeName(mylambdas->Return_Name());
 			extTree = new TreeExt(mylambdas->Return_Extension());
 			sizTree = new TreeSize(mylambdas->Return_Size());
+			dattree = new TreeDate(mylambdas->Return_Date());
 
 		}
 
@@ -72,13 +75,13 @@ namespace Project1 {
 				delete components;
 			}
 		}
-		
+
 		ListViewItem ^ItemLista;
-		
-		
-		
-		
-		
+
+
+
+
+
 	private: System::Windows::Forms::Button^  button1;
 	protected:
 	private: System::Windows::Forms::Button^  button2;
@@ -252,39 +255,61 @@ namespace Project1 {
 		}
 #pragma endregion
 
-		private: std::string remove_extension(const std::string& filename) {
-			size_t lastdot = filename.find_last_of(".");
-			if (lastdot == std::string::npos) return filename;
-			return filename.substr(0, lastdot);
-		}
+	private: std::string remove_extension(const std::string& filename) {
+		size_t lastdot = filename.find_last_of(".");
+		if (lastdot == std::string::npos) return filename;
+		return filename.substr(0, lastdot);
+	}
 
-		private: std::string remove_name(const std::string& filename)
-		{
-			size_t lastdot = filename.find_last_of(".");
-			size_t total = filename.size();
+	private: std::string remove_name(const std::string& filename)
+	{
+		size_t lastdot = filename.find_last_of(".");
+		size_t total = filename.size();
 
-			return filename.substr(lastdot + 1, total);
-		}
+		return filename.substr(lastdot + 1, total);
+	}
 
-		private: void MarshalString(String ^ s, string& os) 
-		{
-			using namespace Runtime::InteropServices;
-			const char* chars =
-				(const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
-			os = chars;
-			Marshal::FreeHGlobal(IntPtr((void*)chars));
-		}
+	private: void MarshalString(String ^ s, string& os)
+	{
+		using namespace Runtime::InteropServices;
+		const char* chars =
+			(const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
+		os = chars;
+		Marshal::FreeHGlobal(IntPtr((void*)chars));
+	}
 
-		
+
 
 	private: System::Void FileExplorer_Load(System::Object^  sender, System::EventArgs^  e)
 	{
 		//listView1->GridLines = true;
 		listView1->SmallImageList = imageList1;
-		
+
 	}
 
-			 
+	private: string  CHANGEDATE(int tipo)
+	{
+		int type = tipo;
+		string date = " ";
+		switch (type)
+		{
+		case 1:
+			date = "1/7/18";
+			break;
+		case 2:
+			date = "4/7/18";
+			break;
+		case 3:
+			date = "9/10/19";
+		case 4:
+			date = "17/8/19";
+			break;
+		case 5:
+			date = "25/10/17";
+			break;
+		}
+		return date;
+	}
 
 
 
@@ -292,21 +317,23 @@ namespace Project1 {
 
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e)
 	{
-		
+
 		if (DirectoryTbx->Text->Length > 0)
 		{
 
-			
+
 			if (DirectoryTbx->Text->Substring(DirectoryTbx->Text->Length - 1) == "/")
 				DirectoryTbx->Text = DirectoryTbx->Text->Substring(0, DirectoryTbx->Text->Length - 1);
 
 			vector<Archivo*>Archivos_vector;
-			
-			
+
+
 			string name = "";
 			string extension = "";
 			string directory = "";
+			string date = "";
 			long long size = 0;
+			long long fecha = 0;
 			MarshalString(DirectoryTbx->Text, directory);
 
 			const path& pathToShow(directory);
@@ -317,186 +344,200 @@ namespace Project1 {
 
 				name = entry.path().filename().string();
 				extension = entry.path().extension().string();
+				//date = entry.path().extension().string();
 
-				
 
 
 				try {
 					size = file_size(entry.path());
-					
+
 				}
 				catch (filesystem_error& e)
 				{
 					size = 0;
+					date = 10;
 				}
 
 				if (extension == "" && size == 0)
 				{
 					extension = "carpeta";
+					date = CHANGEDATE(rand() % 5 + 1);
 				}
 
-				
+
 				name = remove_extension(name);
 				extension = remove_name(extension);
-				Archivos_vector.push_back(new Archivo(name, extension, size));
+				Archivos_vector.push_back(new Archivo(name, extension, size, date));
 			}
 
 
-		
-			
-			
+
+
+
 			listView1->Items->Clear();
 			nameTree->Limpiar_Arbol();
 			extTree->Limpiar_Arbol();
 			sizTree->Limpiar_Arbol();
+			dattree->Limpiar_Arbol();
 
 			for (auto it : Archivos_vector)
 			{
 				nameTree->Add(it);
 				extTree->Add(it);
 				sizTree->Add(it);
+				dattree->Add(it);
 			}
-		
-		
-			
 
-			nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Size(), listView1);
+
+
+
+			nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Size(), mylambdas->Return_Date(), listView1);
 			Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";
-			
+
 
 			Asignar_iconos();
 
-			
+
 		}
 
 	}
 
-private: void Asignar_iconos()
-{
-	for (int i = 0; i < listView1->Items->Count; i++)
+	private: void Asignar_iconos()
 	{
-
-		if (listView1->Items[i]->SubItems[1]->Text == "carpeta")
+		for (int i = 0; i < listView1->Items->Count; i++)
 		{
-			listView1->Items[i]->ImageIndex = 0;
-		}
 
-
-
-		else if (listView1->Items[i]->SubItems[1]->Text == "xlsx")
-		{
-			listView1->Items[i]->ImageIndex = 2;
-		}
-
-		else if (listView1->Items[i]->SubItems[1]->Text == "jpg" || listView1->Items[i]->SubItems[1]->Text == "JPG")
-		{
-			listView1->Items[i]->ImageIndex = 3;
-		}
-
-		else if (listView1->Items[i]->SubItems[1]->Text == "pdf")
-		{
-			listView1->Items[i]->ImageIndex = 4;
-		}
-
-		else if (listView1->Items[i]->SubItems[1]->Text == "png")
-		{
-			listView1->Items[i]->ImageIndex = 5;
-		}
-
-		else if (listView1->Items[i]->SubItems[1]->Text == "ppt")
-		{
-			listView1->Items[i]->ImageIndex = 6;
-		}
-
-		else if (listView1->Items[i]->SubItems[1]->Text == "rar")
-		{
-			listView1->Items[i]->ImageIndex = 7;
-		}
-
-		else if (listView1->Items[i]->SubItems[1]->Text == "doc" || listView1->Items[i]->SubItems[1]->Text == "docx")
-		{
-			listView1->Items[i]->ImageIndex = 8;
-		}
-
-		else if (listView1->Items[i]->SubItems[1]->Text == "zip")
-		{
-			listView1->Items[i]->ImageIndex = 9;
-		}
-		else
-		{
-			listView1->Items[i]->ImageIndex = 1;
-		}
-	}
-}
-
-private: System::Void listView1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) 
-{
-	
-}
-
-private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
-{
-	
-}
-private: System::Void DirectoryTbx_TextChanged(System::Object^  sender, System::EventArgs^  e) 
-{
-	if (DirectoryTbx->Text->Length > 0)
-	{
-		//validamos direccion
-		DirectoryTbx->Text = DirectoryTbx->Text->Replace("\\", "/");
-		
-		
-
-		//Valida que caracteres como / y : no esten juntos
-		for (int i = 0; i < DirectoryTbx->Text->Length-1; i++)
-		{
-			if ((DirectoryTbx->Text[i] == '/' &&  DirectoryTbx->Text[i + 1] == '/')
-				||(DirectoryTbx->Text[i] == ':' &&  DirectoryTbx->Text[i + 1] == ':'))
+			if (listView1->Items[i]->SubItems[1]->Text == "carpeta")
 			{
-				DirectoryTbx->Text = DirectoryTbx->Text->Remove(i, 1);
+				listView1->Items[i]->ImageIndex = 0;
+				CHANGEDATE(rand() % 5);
 			}
 
-			//valida que solo la carpeta raiz C: posea ':' y no los demás
-			if (i > 1)
+
+
+			else if (listView1->Items[i]->SubItems[1]->Text == "xlsx")
 			{
-				if (DirectoryTbx->Text[i] == ':')
+				listView1->Items[i]->ImageIndex = 2;
+				CHANGEDATE(rand() % 5);
+			}
+
+			else if (listView1->Items[i]->SubItems[1]->Text == "jpg" || listView1->Items[i]->SubItems[1]->Text == "JPG")
+			{
+				listView1->Items[i]->ImageIndex = 3;
+				CHANGEDATE(rand() % 5);
+			}
+
+			else if (listView1->Items[i]->SubItems[1]->Text == "pdf")
+			{
+				listView1->Items[i]->ImageIndex = 4;
+				CHANGEDATE(rand() % 5);
+			}
+
+			else if (listView1->Items[i]->SubItems[1]->Text == "png")
+			{
+				listView1->Items[i]->ImageIndex = 5;
+				CHANGEDATE(rand() % 5);
+			}
+
+			else if (listView1->Items[i]->SubItems[1]->Text == "ppt")
+			{
+				listView1->Items[i]->ImageIndex = 6;
+				CHANGEDATE(rand() % 5);
+			}
+
+			else if (listView1->Items[i]->SubItems[1]->Text == "rar")
+			{
+				listView1->Items[i]->ImageIndex = 7;
+				CHANGEDATE(rand() % 5);
+			}
+
+			else if (listView1->Items[i]->SubItems[1]->Text == "doc" || listView1->Items[i]->SubItems[1]->Text == "docx")
+			{
+				listView1->Items[i]->ImageIndex = 8;
+				CHANGEDATE(rand() % 5);
+			}
+
+			else if (listView1->Items[i]->SubItems[1]->Text == "zip")
+			{
+				listView1->Items[i]->ImageIndex = 9;
+				CHANGEDATE(rand() % 5);
+			}
+			else
+			{
+				listView1->Items[i]->ImageIndex = 1;
+			}
+		}
+	}
+
+	private: System::Void listView1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e)
+	{
+
+	}
+
+	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e)
+	{
+
+	}
+	private: System::Void DirectoryTbx_TextChanged(System::Object^  sender, System::EventArgs^  e)
+	{
+		if (DirectoryTbx->Text->Length > 0)
+		{
+			//validamos direccion
+			DirectoryTbx->Text = DirectoryTbx->Text->Replace("\\", "/");
+
+
+
+			//Valida que caracteres como / y : no esten juntos
+			for (int i = 0; i < DirectoryTbx->Text->Length - 1; i++)
+			{
+				if ((DirectoryTbx->Text[i] == '/' &&  DirectoryTbx->Text[i + 1] == '/')
+					|| (DirectoryTbx->Text[i] == ':' &&  DirectoryTbx->Text[i + 1] == ':'))
 				{
 					DirectoryTbx->Text = DirectoryTbx->Text->Remove(i, 1);
 				}
+
+				//valida que solo la carpeta raiz C: posea ':' y no los demás
+				if (i > 1)
+				{
+					if (DirectoryTbx->Text[i] == ':')
+					{
+						DirectoryTbx->Text = DirectoryTbx->Text->Remove(i, 1);
+					}
+				}
 			}
+
+
+
+
+			DirectoryTbx->Text = DirectoryTbx->Text->Replace("*", "");
+			DirectoryTbx->Text = DirectoryTbx->Text->Replace("<", "");
+			DirectoryTbx->Text = DirectoryTbx->Text->Replace(">", "");
+			DirectoryTbx->Text = DirectoryTbx->Text->Replace("|", "");
+			DirectoryTbx->Text = DirectoryTbx->Text->Replace("?", "");
+
+
 		}
 
-		
-	
+		//ubicamos al final del txtBox
+		DirectoryTbx->SelectionStart = DirectoryTbx->Text->Length;
 
-		DirectoryTbx->Text = DirectoryTbx->Text->Replace("*", "");
-		DirectoryTbx->Text = DirectoryTbx->Text->Replace("<", "");
-		DirectoryTbx->Text = DirectoryTbx->Text->Replace(">", "");
-		DirectoryTbx->Text = DirectoryTbx->Text->Replace("|", "");
-		DirectoryTbx->Text = DirectoryTbx->Text->Replace("?", "");
-
-		
 	}
-
-	//ubicamos al final del txtBox
-	DirectoryTbx->SelectionStart = DirectoryTbx->Text->Length;
-	
-}
-private: System::Void listView1_ColumnClick(System::Object^  sender, System::Windows::Forms::ColumnClickEventArgs^  e) 
-{
-	
-	listView1->Items->Clear();
-	
-	switch (e->Column)
+	private: System::Void listView1_ColumnClick(System::Object^  sender, System::Windows::Forms::ColumnClickEventArgs^  e)
 	{
-	case 0:nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Size(), listView1);break;
-	case 1:extTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Size(), listView1); break;
-	case 2:; break;
-	case 3:sizTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Size(), listView1); break;
-	}
 
-	Asignar_iconos();
-	
-}
-};
+		listView1->Items->Clear();
+
+		switch (e->Column)
+		{
+		case 0:nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Size(), mylambdas->Return_Date(), listView1); break;
+		case 1:extTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Size(), mylambdas->Return_Date(), listView1); break;
+		case 2:dattree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Size(), mylambdas->Return_Date(), listView1); break;; break;
+		case 3:sizTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Size(), mylambdas->Return_Date(), listView1); break;
+			//case 4: dattree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension()/*,mylambdas->Return_Date()*/, mylambdas->Return_Size(), listView1); break;
+		}
+
+		Asignar_iconos();
+
+	}
+	};
 }

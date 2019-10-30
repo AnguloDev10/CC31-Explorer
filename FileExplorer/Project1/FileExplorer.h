@@ -5,11 +5,14 @@
 #include <string>
 #include <ctime>
 #include <vector>
+#include<chrono>
 #include <filesystem>
 #include <functional>
 using namespace std;
 using namespace System::IO;
 using namespace experimental::filesystem;
+namespace fs = experimental::filesystem;
+using namespace std::chrono_literals;
 typedef Tree<Archivo*, string, nullptr> TreeName;
 typedef Tree<Archivo*, string, nullptr> TreeExt;
 typedef Tree<Archivo*, long long, nullptr> TreeSize;
@@ -236,29 +239,11 @@ namespace Project1 {
 			this->imageList1->Images->SetKeyName(8, L"word.jpg");
 			this->imageList1->Images->SetKeyName(9, L"zip-icon.png");
 			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(665, 31);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(164, 20);
-			this->textBox1->TabIndex = 7;
-			// 
-			// button4
-			// 
-			this->button4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button4.Image")));
-			this->button4->Location = System::Drawing::Point(835, 30);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(25, 24);
-			this->button4->TabIndex = 8;
-			this->button4->UseVisualStyleBackColor = true;
-			// 
 			// FileExplorer
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(876, 422);
-			this->Controls->Add(this->button4);
-			this->Controls->Add(this->textBox1);
+			this->ClientSize = System::Drawing::Size(677, 422);
 			this->Controls->Add(this->Cant_Elem);
 			this->Controls->Add(this->listView1);
 			this->Controls->Add(this->pictureBox1);
@@ -367,9 +352,12 @@ namespace Project1 {
 
 				name = entry.path().filename().string();
 				extension = entry.path().extension().string();
+				auto dia = fs::last_write_time(directory);
 				//date = entry.path().extension().string();
-
-
+				std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
+				fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 hour to the future
+				dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
+				date = std::asctime(std::localtime(&cftime));
 
 				try {
 					size = file_size(entry.path());
@@ -378,13 +366,13 @@ namespace Project1 {
 				catch (filesystem_error& e)
 				{
 					size = 0;
-					date = 10;
+					//date = 10;
 				}
 
 				if (extension == "" && size == 0)
 				{
 					extension = "carpeta";
-					date = CHANGEDATE(rand() % 5 + 1);
+					//date = CHANGEDATE(rand() % 5 + 1);
 				}
 
 
@@ -562,5 +550,10 @@ namespace Project1 {
 		Asignar_iconos();
 
 	}
-	};
+	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+
+
+	}
+};
 }

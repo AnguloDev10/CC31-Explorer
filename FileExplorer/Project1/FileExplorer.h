@@ -8,6 +8,12 @@
 #include<chrono>
 #include <filesystem>
 #include <functional>
+#include<cstdlib>
+#include <chrono>
+#include <iomanip>
+#include <fstream>
+#include<ATLComTime.h>
+
 using namespace std;
 using namespace System::IO;
 using namespace experimental::filesystem;
@@ -362,10 +368,10 @@ namespace Project1 {
 				extension = entry.path().extension().string();
 				auto dia = fs::last_write_time(directory);
 				//date = entry.path().extension().string();
-				std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
+				time_t cftime = decltype(dia)::clock::to_time_t(dia);
 				fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 hour to the future
 				dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
-				date = std::asctime(std::localtime(&cftime));
+				date = asctime(localtime(&cftime));
 
 				try {
 					size = file_size(entry.path());
@@ -443,43 +449,43 @@ namespace Project1 {
 			else if (listView1->Items[i]->SubItems[1]->Text == "jpg" || listView1->Items[i]->SubItems[1]->Text == "JPG")
 			{
 				listView1->Items[i]->ImageIndex = 3;
-				CHANGEDATE(rand() % 5);
+				//CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "pdf")
 			{
 				listView1->Items[i]->ImageIndex = 4;
-				CHANGEDATE(rand() % 5);
+				//CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "png")
 			{
 				listView1->Items[i]->ImageIndex = 5;
-				CHANGEDATE(rand() % 5);
+				//CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "ppt")
 			{
 				listView1->Items[i]->ImageIndex = 6;
-				CHANGEDATE(rand() % 5);
+				//CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "rar")
 			{
 				listView1->Items[i]->ImageIndex = 7;
-				CHANGEDATE(rand() % 5);
+				//CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "doc" || listView1->Items[i]->SubItems[1]->Text == "docx")
 			{
 				listView1->Items[i]->ImageIndex = 8;
-				CHANGEDATE(rand() % 5);
+				//CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "zip")
 			{
 				listView1->Items[i]->ImageIndex = 9;
-				CHANGEDATE(rand() % 5);
+				//CHANGEDATE(rand() % 5);
 			}
 			else
 			{

@@ -41,6 +41,8 @@ namespace Project1 {
 		TreeDate* dattree;
 	private: System::Windows::Forms::Label^  Cant_Elem;
 	private: System::Windows::Forms::ImageList^  imageList1;
+	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::Button^  button4;
 			 TreeSize *sizTree;
 
 
@@ -124,6 +126,8 @@ namespace Project1 {
 			this->Tamaño = (gcnew System::Windows::Forms::ColumnHeader());
 			this->Cant_Elem = (gcnew System::Windows::Forms::Label());
 			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -179,9 +183,9 @@ namespace Project1 {
 					this->Fecha, this->Tamaño
 			});
 			this->listView1->GridLines = true;
-			this->listView1->Location = System::Drawing::Point(13, 91);
+			this->listView1->Location = System::Drawing::Point(13, 76);
 			this->listView1->Name = L"listView1";
-			this->listView1->Size = System::Drawing::Size(650, 296);
+			this->listView1->Size = System::Drawing::Size(847, 296);
 			this->listView1->TabIndex = 5;
 			this->listView1->UseCompatibleStateImageBehavior = false;
 			this->listView1->View = System::Windows::Forms::View::Details;
@@ -191,27 +195,27 @@ namespace Project1 {
 			// Nombre
 			// 
 			this->Nombre->Text = L"Nombre";
-			this->Nombre->Width = 216;
+			this->Nombre->Width = 210;
 			// 
 			// Extension
 			// 
 			this->Extension->Text = L"Extension";
-			this->Extension->Width = 146;
+			this->Extension->Width = 210;
 			// 
 			// Fecha
 			// 
 			this->Fecha->Text = L"Fecha";
-			this->Fecha->Width = 150;
+			this->Fecha->Width = 210;
 			// 
 			// Tamaño
 			// 
 			this->Tamaño->Text = L"Tamaño";
-			this->Tamaño->Width = 133;
+			this->Tamaño->Width = 214;
 			// 
 			// Cant_Elem
 			// 
 			this->Cant_Elem->AutoSize = true;
-			this->Cant_Elem->Location = System::Drawing::Point(12, 400);
+			this->Cant_Elem->Location = System::Drawing::Point(12, 387);
 			this->Cant_Elem->Name = L"Cant_Elem";
 			this->Cant_Elem->Size = System::Drawing::Size(64, 13);
 			this->Cant_Elem->TabIndex = 6;
@@ -232,11 +236,29 @@ namespace Project1 {
 			this->imageList1->Images->SetKeyName(8, L"word.jpg");
 			this->imageList1->Images->SetKeyName(9, L"zip-icon.png");
 			// 
+			// textBox1
+			// 
+			this->textBox1->Location = System::Drawing::Point(665, 31);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(164, 20);
+			this->textBox1->TabIndex = 7;
+			// 
+			// button4
+			// 
+			this->button4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button4.Image")));
+			this->button4->Location = System::Drawing::Point(835, 30);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(25, 24);
+			this->button4->TabIndex = 8;
+			this->button4->UseVisualStyleBackColor = true;
+			// 
 			// FileExplorer
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(677, 422);
+			this->ClientSize = System::Drawing::Size(876, 422);
+			this->Controls->Add(this->button4);
+			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->Cant_Elem);
 			this->Controls->Add(this->listView1);
 			this->Controls->Add(this->pictureBox1);
@@ -282,9 +304,10 @@ namespace Project1 {
 
 	private: System::Void FileExplorer_Load(System::Object^  sender, System::EventArgs^  e)
 	{
-		//listView1->GridLines = true;
+		
 		listView1->SmallImageList = imageList1;
-
+		listView1->AllowColumnReorder = false;
+		listView1->AllowDrop = false;
 	}
 
 	private: string  CHANGEDATE(int tipo)

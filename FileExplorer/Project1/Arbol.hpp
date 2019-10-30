@@ -118,7 +118,6 @@ private:
 			ITEM->SubItems->Add(ext);
 			ITEM->SubItems->Add(date);
 			ITEM->SubItems->Add(size);
-
 			listview1->Items->Add(ITEM);
 
 

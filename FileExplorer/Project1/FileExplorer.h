@@ -13,6 +13,7 @@
 #include <iomanip>
 #include <fstream>
 #include<ATLComTime.h>
+#include <sstream> 
 
 using namespace std;
 using namespace System::IO;
@@ -51,6 +52,7 @@ namespace Project1 {
 		TreeSize *sizTree;
 		TreeName* RecursivoName;
 		TreeExt* RecursivoExt;
+		TreeSize* RecursivoSize;
 		
 	private: System::Windows::Forms::Label^  Cant_Elem;
 	private: System::Windows::Forms::ImageList^  imageList1;
@@ -82,6 +84,7 @@ namespace Project1 {
 			dattree = new TreeDate(mylambdas->Return_Date());
 			RecursivoName = new TreeName(mylambdas->Return_Name());
 			RecursivoExt = new TreeName(mylambdas->Return_Extension());
+			RecursivoSize = new TreeSize(mylambdas->Return_Size());
 		}
 
 	protected:
@@ -336,7 +339,30 @@ namespace Project1 {
 		os = chars;
 		Marshal::FreeHGlobal(IntPtr((void*)chars));
 	}
+	private: string extractIntegerWords(string str)
+	{
+		stringstream ss;
 
+		
+		ss << str;
+
+		
+		string temp;
+		int found;
+		while (!ss.eof()) {
+
+			
+			ss >> temp;
+
+			
+			if (stringstream(temp) >> found)
+				cout << found << " ";
+
+			
+			temp = "";
+		}
+		return temp;
+	}
 
 
 	private: System::Void FileExplorer_Load(System::Object^  sender, System::EventArgs^  e)
@@ -380,7 +406,7 @@ namespace Project1 {
 
 		if (DirectoryTbx->Text->Length > 0)
 		{
-
+			Cursor->Current = Cursors::WaitCursor;
 
 			if (DirectoryTbx->Text->Substring(DirectoryTbx->Text->Length - 1) == "/")
 				DirectoryTbx->Text = DirectoryTbx->Text->Substring(0, DirectoryTbx->Text->Length - 1);
@@ -613,8 +639,17 @@ private: System::Void ButtonSearch_Click(System::Object^  sender, System::EventA
 
 	if (SearchTxbox->TextLength > 0 && DirectoryTbx->TextLength > 0)
 	{
+
+		Cursor->Current = Cursors::WaitCursor;
+
 		string nombre = "";
 		string direccion = "";
+		string numeros = "";
+		string tam;
+		MarshalString(SearchTxbox->Text,tam);
+		tam = extractIntegerWords(tam);
+
+
 		MarshalString(SearchTxbox->Text, nombre);
 		MarshalString(DirectoryTbx->Text, direccion);
 		
@@ -637,15 +672,17 @@ private: System::Void ButtonSearch_Click(System::Object^  sender, System::EventA
 
 			name = entry.path().filename().string();
 			extension = entry.path().extension().string();
+			
 			auto dia = fs::last_write_time(directory);
 			//date = entry.path().extension().string();
 			std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
 			fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 ho
 			dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
 			date = std::asctime(std::localtime(&cftime));
-
+			//long long  sizex = 0;
 			try {
 				size = file_size(entry.path());
+				 //sizex = size;
 
 			}
 			catch (filesystem_error& e)
@@ -663,19 +700,20 @@ private: System::Void ButtonSearch_Click(System::Object^  sender, System::EventA
 
 			name = remove_extension(name);
 			extension = remove_name(extension);
+			
 			Archivitos_vector.push_back(new Archivo(name, extension, size, date));
 		}
 
 		listView1->Items->Clear();
 		RecursivoName->Limpiar_Arbol();
 		RecursivoExt->Limpiar_Arbol();
-
+		//RecursivoSize->Limpiar_Arbol();
 
 		for (auto it : Archivitos_vector)
 		{
 			RecursivoName->Add(it);
 			RecursivoExt->Add(it);
-			
+			//RecursivoSize->Add(it);
 
 		}
 
@@ -684,6 +722,7 @@ private: System::Void ButtonSearch_Click(System::Object^  sender, System::EventA
 
 		RecursivoName->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
 		RecursivoExt->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
+		//RecursivoSize->find(135000, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
 		//nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
 		Asignar_iconos();
 

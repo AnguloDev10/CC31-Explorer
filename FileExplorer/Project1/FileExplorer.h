@@ -685,6 +685,7 @@ private: System::Void ButtonSearch_Click(System::Object^  sender, System::EventA
 				 //sizex = size;
 
 			}
+
 			catch (filesystem_error& e)
 			{
 				size = 0;

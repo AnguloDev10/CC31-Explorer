@@ -5,11 +5,14 @@
 #include <string>
 #include <ctime>
 #include <vector>
+#include<chrono>
 #include <filesystem>
 #include <functional>
 using namespace std;
 using namespace System::IO;
 using namespace experimental::filesystem;
+namespace fs = experimental::filesystem;
+using namespace std::chrono_literals;
 typedef Tree<Archivo*, string, nullptr> TreeName;
 typedef Tree<Archivo*, string, nullptr> TreeExt;
 typedef Tree<Archivo*, long long, nullptr> TreeSize;
@@ -41,6 +44,7 @@ namespace Project1 {
 		TreeDate* dattree;
 	private: System::Windows::Forms::Label^  Cant_Elem;
 	private: System::Windows::Forms::ImageList^  imageList1;
+	private: System::Windows::Forms::Button^  button4;
 			 TreeSize *sizTree;
 
 
@@ -124,6 +128,7 @@ namespace Project1 {
 			this->Tamaño = (gcnew System::Windows::Forms::ColumnHeader());
 			this->Cant_Elem = (gcnew System::Windows::Forms::Label());
 			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -232,11 +237,22 @@ namespace Project1 {
 			this->imageList1->Images->SetKeyName(8, L"word.jpg");
 			this->imageList1->Images->SetKeyName(9, L"zip-icon.png");
 			// 
+			// button4
+			// 
+			this->button4->Location = System::Drawing::Point(550, 62);
+			this->button4->Name = L"button4";
+			this->button4->Size = System::Drawing::Size(75, 23);
+			this->button4->TabIndex = 7;
+			this->button4->Text = L"New Path";
+			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &FileExplorer::button4_Click);
+			// 
 			// FileExplorer
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(677, 422);
+			this->Controls->Add(this->button4);
 			this->Controls->Add(this->Cant_Elem);
 			this->Controls->Add(this->listView1);
 			this->Controls->Add(this->pictureBox1);
@@ -344,9 +360,12 @@ namespace Project1 {
 
 				name = entry.path().filename().string();
 				extension = entry.path().extension().string();
+				auto dia = fs::last_write_time(directory);
 				//date = entry.path().extension().string();
-
-
+				std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
+				fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 hour to the future
+				dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
+				date = std::asctime(std::localtime(&cftime));
 
 				try {
 					size = file_size(entry.path());
@@ -355,13 +374,13 @@ namespace Project1 {
 				catch (filesystem_error& e)
 				{
 					size = 0;
-					date = 10;
+					//date = 10;
 				}
 
 				if (extension == "" && size == 0)
 				{
 					extension = "carpeta";
-					date = CHANGEDATE(rand() % 5 + 1);
+					//date = CHANGEDATE(rand() % 5 + 1);
 				}
 
 
@@ -539,5 +558,10 @@ namespace Project1 {
 		Asignar_iconos();
 
 	}
-	};
+	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+
+
+	}
+};
 }

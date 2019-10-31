@@ -8,13 +8,6 @@
 #include<chrono>
 #include <filesystem>
 #include <functional>
-#include<cstdlib>
-#include <chrono>
-#include <iomanip>
-#include <fstream>
-#include<ATLComTime.h>
-#include <sstream> 
-
 using namespace std;
 using namespace System::IO;
 using namespace experimental::filesystem;
@@ -52,8 +45,7 @@ namespace Project1 {
 		TreeSize *sizTree;
 		TreeName* RecursivoName;
 		TreeExt* RecursivoExt;
-		TreeSize* RecursivoSize;
-		
+
 	private: System::Windows::Forms::Label^  Cant_Elem;
 	private: System::Windows::Forms::ImageList^  imageList1;
 	private: System::Windows::Forms::TextBox^  textBox1;
@@ -62,7 +54,7 @@ namespace Project1 {
 	private: System::Windows::Forms::Button^  ButtonSearch;
 
 
-			 
+
 
 
 
@@ -84,7 +76,6 @@ namespace Project1 {
 			dattree = new TreeDate(mylambdas->Return_Date());
 			RecursivoName = new TreeName(mylambdas->Return_Name());
 			RecursivoExt = new TreeName(mylambdas->Return_Extension());
-			RecursivoSize = new TreeSize(mylambdas->Return_Size());
 		}
 
 	protected:
@@ -339,35 +330,12 @@ namespace Project1 {
 		os = chars;
 		Marshal::FreeHGlobal(IntPtr((void*)chars));
 	}
-	private: string extractIntegerWords(string str)
-	{
-		stringstream ss;
 
-		
-		ss << str;
-
-		
-		string temp;
-		int found;
-		while (!ss.eof()) {
-
-			
-			ss >> temp;
-
-			
-			if (stringstream(temp) >> found)
-				cout << found << " ";
-
-			
-			temp = "";
-		}
-		return temp;
-	}
 
 
 	private: System::Void FileExplorer_Load(System::Object^  sender, System::EventArgs^  e)
 	{
-		
+
 		listView1->SmallImageList = imageList1;
 		listView1->AllowColumnReorder = false;
 		listView1->AllowDrop = false;
@@ -406,7 +374,7 @@ namespace Project1 {
 
 		if (DirectoryTbx->Text->Length > 0)
 		{
-			Cursor->Current = Cursors::WaitCursor;
+
 
 			if (DirectoryTbx->Text->Substring(DirectoryTbx->Text->Length - 1) == "/")
 				DirectoryTbx->Text = DirectoryTbx->Text->Substring(0, DirectoryTbx->Text->Length - 1);
@@ -432,10 +400,10 @@ namespace Project1 {
 				extension = entry.path().extension().string();
 				auto dia = fs::last_write_time(directory);
 				//date = entry.path().extension().string();
-				time_t cftime = decltype(dia)::clock::to_time_t(dia);
+				std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
 				fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 hour to the future
 				dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
-				date = asctime(localtime(&cftime));
+				date = std::asctime(std::localtime(&cftime));
 
 				try {
 					size = file_size(entry.path());
@@ -480,7 +448,7 @@ namespace Project1 {
 
 
 
-			nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(),  mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
+			nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
 			Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";
 
 
@@ -513,43 +481,43 @@ namespace Project1 {
 			else if (listView1->Items[i]->SubItems[1]->Text == "jpg" || listView1->Items[i]->SubItems[1]->Text == "JPG")
 			{
 				listView1->Items[i]->ImageIndex = 3;
-				//CHANGEDATE(rand() % 5);
+				CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "pdf")
 			{
 				listView1->Items[i]->ImageIndex = 4;
-				//CHANGEDATE(rand() % 5);
+				CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "png")
 			{
 				listView1->Items[i]->ImageIndex = 5;
-				//CHANGEDATE(rand() % 5);
+				CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "ppt")
 			{
 				listView1->Items[i]->ImageIndex = 6;
-				//CHANGEDATE(rand() % 5);
+				CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "rar")
 			{
 				listView1->Items[i]->ImageIndex = 7;
-				//CHANGEDATE(rand() % 5);
+				CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "doc" || listView1->Items[i]->SubItems[1]->Text == "docx")
 			{
 				listView1->Items[i]->ImageIndex = 8;
-				//CHANGEDATE(rand() % 5);
+				CHANGEDATE(rand() % 5);
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "zip")
 			{
 				listView1->Items[i]->ImageIndex = 9;
-				//CHANGEDATE(rand() % 5);
+				CHANGEDATE(rand() % 5);
 			}
 			else
 			{
@@ -618,119 +586,105 @@ namespace Project1 {
 
 		switch (e->Column)
 		{
-		case 0:nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(),  mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
-		case 1:extTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(),   mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
-		case 2:dattree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(),   mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;; break;
-		case 3:sizTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(),   mylambdas->Return_Date(), mylambdas->Return_Size() , listView1); break;
+		case 0:nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
+		case 1:extTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
+		case 2:dattree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;; break;
+		case 3:sizTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
 			//case 4: dattree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension()/*,mylambdas->Return_Date()*/, mylambdas->Return_Size(), listView1); break;
 		}
 
 		Asignar_iconos();
 
 	}
-	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e) 
+	private: System::Void button4_Click(System::Object^  sender, System::EventArgs^  e)
 	{
 
 
 	}
-private: System::Void ButtonSearch_Click(System::Object^  sender, System::EventArgs^  e) 
-{
-	
-
-	if (SearchTxbox->TextLength > 0 && DirectoryTbx->TextLength > 0)
+	private: System::Void ButtonSearch_Click(System::Object^  sender, System::EventArgs^  e)
 	{
 
-		Cursor->Current = Cursors::WaitCursor;
 
-		string nombre = "";
-		string direccion = "";
-		string numeros = "";
-		string tam;
-		MarshalString(SearchTxbox->Text,tam);
-		tam = extractIntegerWords(tam);
-
-
-		MarshalString(SearchTxbox->Text, nombre);
-		MarshalString(DirectoryTbx->Text, direccion);
-		
-		vector<Archivo*>Archivitos_vector;
-
-
-		string name = "";
-		string extension = "";
-		string directory = "";
-		string date = "";
-		long long size = 0;
-		long long fecha = 0;
-		MarshalString(DirectoryTbx->Text, directory);
-
-		const path& pathToShowing(directory);
-
-
-		for (const auto & entry : recursive_directory_iterator(pathToShowing))
+		if (SearchTxbox->TextLength > 0 && DirectoryTbx->TextLength > 0)
 		{
+			string nombre = "";
+			string direccion = "";
+			MarshalString(SearchTxbox->Text, nombre);
+			MarshalString(DirectoryTbx->Text, direccion);
 
-			name = entry.path().filename().string();
-			extension = entry.path().extension().string();
-			
-			auto dia = fs::last_write_time(directory);
-			//date = entry.path().extension().string();
-			std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
-			fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 ho
-			dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
-			date = std::asctime(std::localtime(&cftime));
-			//long long  sizex = 0;
-			try {
-				size = file_size(entry.path());
-				 //sizex = size;
+			vector<Archivo*>Archivitos_vector;
 
-			}
 
-			catch (filesystem_error& e)
+			string name = "";
+			string extension = "";
+			string directory = "";
+			string date = "";
+			long long size = 0;
+			long long fecha = 0;
+			MarshalString(DirectoryTbx->Text, directory);
+
+			const path& pathToShowing(directory);
+
+
+			for (const auto & entry : recursive_directory_iterator(pathToShowing))
 			{
-				size = 0;
-				//date = 10;
+
+				name = entry.path().filename().string();
+				extension = entry.path().extension().string();
+				auto dia = fs::last_write_time(directory);
+				//date = entry.path().extension().string();
+				std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
+				fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 ho
+				dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
+				date = std::asctime(std::localtime(&cftime));
+
+				try {
+					size = file_size(entry.path());
+
+				}
+				catch (filesystem_error& e)
+				{
+					size = 0;
+					//date = 10;
+				}
+
+				if (extension == "" && size == 0)
+				{
+					extension = "carpeta";
+					//date = CHANGEDATE(rand() % 5 + 1);
+				}
+
+
+				name = remove_extension(name);
+				extension = remove_name(extension);
+				Archivitos_vector.push_back(new Archivo(name, extension, size, date));
 			}
 
-			if (extension == "" && size == 0)
+			listView1->Items->Clear();
+			RecursivoName->Limpiar_Arbol();
+			RecursivoExt->Limpiar_Arbol();
+
+
+			for (auto it : Archivitos_vector)
 			{
-				extension = "carpeta";
-				//date = CHANGEDATE(rand() % 5 + 1);
+				RecursivoName->Add(it);
+				RecursivoExt->Add(it);
+
+
 			}
 
 
-			name = remove_extension(name);
-			extension = remove_name(extension);
-			
-			Archivitos_vector.push_back(new Archivo(name, extension, size, date));
+
+
+			RecursivoName->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
+			RecursivoExt->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
+			//nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
+			Asignar_iconos();
+
+			Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";
+			Archivitos_vector.clear();
 		}
 
-		listView1->Items->Clear();
-		RecursivoName->Limpiar_Arbol();
-		RecursivoExt->Limpiar_Arbol();
-		//RecursivoSize->Limpiar_Arbol();
-
-		for (auto it : Archivitos_vector)
-		{
-			RecursivoName->Add(it);
-			RecursivoExt->Add(it);
-			//RecursivoSize->Add(it);
-
-		}
-
-		
-
-
-		RecursivoName->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
-		RecursivoExt->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
-		//RecursivoSize->find(135000, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
-		//nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
-		Asignar_iconos();
-
-		Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";
-		Archivitos_vector.clear();
 	}
-
-}
-};
+	};
 }

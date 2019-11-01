@@ -401,7 +401,8 @@ namespace Project1 {
 				auto dia = fs::last_write_time(directory);
 				//date = entry.path().extension().string();
 				std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
-				fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 hour to the future
+				//fs::last_write_time(directory,dia);
+				//fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 hour to the future
 				dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
 				date = std::asctime(std::localtime(&cftime));
 
@@ -634,7 +635,7 @@ namespace Project1 {
 				auto dia = fs::last_write_time(directory);
 				//date = entry.path().extension().string();
 				std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
-				fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 ho
+				//fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 ho
 				dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
 				date = std::asctime(std::localtime(&cftime));
 

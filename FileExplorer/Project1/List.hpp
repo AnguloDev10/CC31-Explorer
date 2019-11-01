@@ -110,6 +110,19 @@ public:
 		}
 
 	}
+	T obtener_en_posicion(float posicion) {
+		Node* aux = ini;
+		int pos = 0;
+		while (aux != nullptr)
+		{
+			if (pos == posicion)
+			{
+				return aux->elem;
+			}
+			aux = aux->next;
+			++pos;
+		}
+	}
 };
 
 #endif 

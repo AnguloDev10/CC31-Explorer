@@ -34,16 +34,7 @@ public:
 		auto l4 = [](Archivo *retorno) { return retorno->Get_Date(); };
 		return l4;
 	}
-
-
-
 };
-
-
-
-
-
-
 
 #endif // !_Lambdas_H_
 

@@ -33,25 +33,43 @@ public:
 		nuevo->next = ini;
 		nuevo->prev = nullptr;
 		ini = nuevo;
-		if (ini->next != nullptr) {
-			end = ini->next;
+		if (end == nullptr) {
+			if (ini->next != nullptr) {
+				end = ini->next;
+			}
 		}
 		++len;
 	}
 	void agregar_final(T elem) {
-		Node* nuevo = end;
-		nuevo->prev = end;
+		//Node* nuevo = end;
+		Node*nuevo = new Node(elem);
+		if (len == 0)
+		{
+
+			ini = nuevo;
+			end = nuevo;
+		}
+
+		else
+		{
+			end->next = nuevo;
+			nuevo->prev = end;
+			end = nuevo;
+		}
+		/*nuevo->prev = end;
 		nuevo->next = nullptr;
 		end = nuevo;
-		if (end->prev!= nullptr) {
-			ini = end->prev;
-		}
+		if (ini == nullptr) {
+			if (end->prev != nullptr) {
+				ini = end->prev;
+			}
+		}*/
 		++len;
 	}
 	void fin() {
-		Node* aux=end;
+		Node* aux = end;
 		if (end->prev != nullptr)
-			aux=end->prev;
+			aux = end->prev;
 	}
 	void agregar_posicion(int pos, T elem) {
 		if (pos > len)return;
@@ -123,6 +141,46 @@ public:
 			++pos;
 		}
 	}
+	class Iterador {
+		Node* aux;
+
+	public:
+		Iterador(Node* aux = nullptr) : aux(aux) {}
+		void operator ++ () { aux = aux->next; }
+		void operator -- () { aux = aux->prev; }
+		bool operator != (Iterador it) { return aux != it.aux; }
+		int operator* () { return aux->element; }
+	};
+	///////////////////iterador
+
+
+	Iterador inicial() { return Iterador(ini); };
+	Iterador ultimo() { return Iterador(end); };
+
+	void Mostrar_Ascendente(lista<T> *jorgeesagay, System::Windows::Forms::ListView^ tabla)
+	{
+		ListViewItem^ITEM;
+		for (lista::Iterador it = jorgeesagay->inicial(); it != nullptr; it++)
+		{
+			ITEM = gcnew ListViewItem((Archivo(*it)).Get_Name().c_str());
+			ITEM->SubItems->Add((Archivo(*it)).Get_Extension().c_str());
+			ITEM->SubItems->Add((Archivo(*it)).Get_Date().c_str());
+			ITEM->SubItems->Add((Archivo(*it)).Get_Size().ToString());
+			tabla->Items->Add(ITEM);
+
+			
+		}
+    }
+
+	void Mostrar_Descendente(lista<T> *jorgeesagay)
+	{
+		for (lista::Iterador it = jorgeesagay->ultimo(); it != nullptr; it--)
+		{
+			(Archivo(*it)).Get_Date();
+		}
+	}
+
+
 };
 
 #endif 

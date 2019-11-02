@@ -448,8 +448,8 @@ namespace Project1 {
 
 
 
-
-			nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
+			//nameTree->Recuperar()
+			//nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
 			Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";
 
 

@@ -446,8 +446,8 @@ namespace Project1 {
 				dattree->Add(it);
 			}
 
-
-
+			nameTree->Recuperar_Elementos();
+			nameTree->Mostrar_Elementos(listView1);
 			//nameTree->Recuperar()
 			//nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
 			Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";
@@ -585,14 +585,14 @@ namespace Project1 {
 
 		listView1->Items->Clear();
 
-		switch (e->Column)
+		/*switch (e->Column)
 		{
 		case 0:nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
 		case 1:extTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
 		case 2:dattree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;; break;
 		case 3:sizTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
-			//case 4: dattree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension()/*,mylambdas->Return_Date()*/, mylambdas->Return_Size(), listView1); break;
-		}
+			case 4: dattree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension()/*,mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
+		}*/
 
 		Asignar_iconos();
 

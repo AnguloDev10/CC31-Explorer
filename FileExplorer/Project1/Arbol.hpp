@@ -114,22 +114,49 @@ private:
 	}
 
 
-	void Recuperar_Elementos(Nodo* node, System::Windows::Forms::ListView^listview1)
+	void Recuperar_Elementos(Nodo* node)
 	{
 		if (node != nullptr && len >0)
 		{
-			Recuperar_Elementos(node->left, Items, SubItem, SubItem2,SubItem3, listview1);
+			Recuperar_Elementos(node->left);
 
 			
 			Lista_Enlazada->agregar_final(node->elem);
 			//Lista_Enlazada->Mostrar_Ascendente(Lista_Enlazada, listview1);
 
-			Recuperar_Elementos(node->right, Items, SubItem, SubItem2,SubItem3, listview1);
+			Recuperar_Elementos(node->right);
 		}
 
 	}
 
-	void Mostrar_elementos
+	
+
+	void Mostrar_Ascendente(System::Windows::Forms::ListView^ tabla)
+	{
+		ListViewItem^ITEM;
+		Archivo *elemen;
+		String^ name, ^ext, ^date,^tamaño;
+		//name = gcnew String("");
+		ext = gcnew String("");
+		date = gcnew String("");
+		tamaño = gcnew String("");
+
+
+		for (lista<T>::Iterador it = Lista_Enlazada->inicial(); it != nullptr; ++it)
+		{
+			elemen = *it ;
+			name = gcnew String(elemen->Get_Name().c_str());
+			ext = gcnew String(elemen->Get_Extension().c_str());
+			date = gcnew String(elemen->Get_Date().c_str());
+			tamaño = gcnew String (elemen->Get_Size().ToString());
+
+			ITEM = gcnew ListViewItem(name);
+			ITEM->SubItems->Add(ext);
+			ITEM->SubItems->Add(date);
+			ITEM->SubItems->Add(tamaño);
+			tabla->Items->Add(ITEM);
+		}
+	}
 	
 
 	void InOrder(Nodo* node, function<void(T)> imprimir)
@@ -208,9 +235,9 @@ public:
 		InOrder(root, imprimir);
 	}
 
-	void Recuperar(System::Windows::Forms::ListView^listview1)
+	void Recuperar_Elementos()
 	{
-		return Recuperar_Elementos(root, listview1);
+		return Recuperar_Elementos(root);
 	}
 
 	bool remove(Comparable val) {
@@ -273,10 +300,14 @@ public:
 		find(root, val, Items,SubItem,SubItem2,SubItem3,listview1);
 	}
 
-	void Mostrar_Elementos(ListView ^tabla)
+	void Mostrar_Elementos(System::Windows::Forms::ListView ^tabla)
 	{
-		return Mostrar_Elementos(Lista_Enlazada, tabla);
+		//return Mostrar_Elementos(tabla);
+		return Mostrar_Ascendente(tabla);
 	}
+
+	
+
 
 };
 

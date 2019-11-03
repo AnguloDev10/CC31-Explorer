@@ -14,11 +14,28 @@ class lista
 		Node* prev;
 		Node(T elem, Node* next = nullptr, Node* prev = nullptr) : elem(elem), next(next), prev(prev) {}
 	};
-private:
 	Node* ini;
 	Node* end;
 	int len;
 public:
+	class Iterador {
+		Node* aux;
+		
+	public:
+		Iterador(Node* aux = nullptr) : aux(aux) {}
+		void operator ++ () { aux = aux->next; }
+		void operator -- () { aux = aux->prev; }
+		bool operator != (Iterador it) { return aux != it.aux; }
+		T operator* () { return aux->elem; }
+	};
+	///////////////////iterador
+
+
+	Iterador inicial() { return Iterador(ini); };
+	Iterador ultimo() { return Iterador(end); };
+
+	
+
 	lista() :ini(nullptr), end(nullptr), len(0) {}
 	~lista() {
 		while (ini != nullptr)
@@ -141,44 +158,17 @@ public:
 			++pos;
 		}
 	}
-	class Iterador {
-		Node* aux;
+	
 
-	public:
-		Iterador(Node* aux = nullptr) : aux(aux) {}
-		void operator ++ () { aux = aux->next; }
-		void operator -- () { aux = aux->prev; }
-		bool operator != (Iterador it) { return aux != it.aux; }
-		int operator* () { return aux->element; }
-	};
-	///////////////////iterador
+	
 
-
-	Iterador inicial() { return Iterador(ini); };
-	Iterador ultimo() { return Iterador(end); };
-
-	void Mostrar_Ascendente(lista<T> *jorgeesagay, System::Windows::Forms::ListView^ tabla)
-	{
-		ListViewItem^ITEM;
-		for (lista::Iterador it = jorgeesagay->inicial(); it != nullptr; it++)
-		{
-			ITEM = gcnew ListViewItem((Archivo(*it)).Get_Name().c_str());
-			ITEM->SubItems->Add((Archivo(*it)).Get_Extension().c_str());
-			ITEM->SubItems->Add((Archivo(*it)).Get_Date().c_str());
-			ITEM->SubItems->Add((Archivo(*it)).Get_Size().ToString());
-			tabla->Items->Add(ITEM);
-
-			
-		}
-    }
-
-	void Mostrar_Descendente(lista<T> *jorgeesagay)
+	/*void Mostrar_Descendente(lista<T> *jorgeesagay)
 	{
 		for (lista::Iterador it = jorgeesagay->ultimo(); it != nullptr; it--)
 		{
 			(Archivo(*it)).Get_Date();
 		}
-	}
+	}*/
 
 
 };

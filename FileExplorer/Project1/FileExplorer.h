@@ -8,16 +8,18 @@
 #include<chrono>
 #include <filesystem>
 #include <functional>
+#include <iomanip>
+
+
 using namespace std;
 using namespace System::IO;
 using namespace experimental::filesystem;
-namespace fs = experimental::filesystem;
 using namespace std::chrono_literals;
+
 typedef Tree<Archivo*, string, nullptr> TreeName;
 typedef Tree<Archivo*, string, nullptr> TreeExt;
 typedef Tree<Archivo*, long long, nullptr> TreeSize;
-typedef Tree<Archivo*, string, nullptr>TreeDate;
-
+typedef Tree<Archivo*, long, nullptr>TreeDate;
 
 
 
@@ -331,6 +333,50 @@ namespace Project1 {
 		Marshal::FreeHGlobal(IntPtr((void*)chars));
 	}
 
+	private: long  Transformar_string(const std::string& date)
+	{
+		long resultado_final = 0;
+		int dia = 0;
+		int mes = 0;;
+		int año = 0;
+		size_t tam = date.size();
+		string Tempday = date.substr(7, 3);
+		string TempMonth = date.substr(4, 3);
+		string TempYear = date.substr(tam-5, 4);
+
+		dia = std::stoi(Tempday);
+		año = std::stoi(TempYear);
+
+		if (TempMonth == "Jan")
+			mes = 1;
+		else if (TempMonth == "Feb")
+			mes = 2;
+		else if (TempMonth == "Mar")
+			mes = 3;
+		else if (TempMonth == "Apr")
+			mes = 4;
+		else if (TempMonth == "May")
+			mes = 5;
+		else if (TempMonth == "Jun")
+			mes = 6;
+		else if (TempMonth == "Jul")
+			mes = 7;
+		else if (TempMonth == "Aug")
+			mes = 8;
+		else if (TempMonth == "Sep")
+			mes = 9;
+		else if (TempMonth == "Oct")
+			mes = 10;
+		else if (TempMonth == "Nov")
+			mes = 11;
+		else if (TempMonth == "Dec")
+			mes = 12;
+
+		resultado_final = (dia * 1000000) + (mes * 10000) + (año);
+		//string 
+		return resultado_final;
+	}
+
 
 
 	private: System::Void FileExplorer_Load(System::Object^  sender, System::EventArgs^  e)
@@ -387,45 +433,51 @@ namespace Project1 {
 			string directory = "";
 			string date = "";
 			long long size = 0;
-			long long fecha = 0;
+			long fecha = 0;
 			MarshalString(DirectoryTbx->Text, directory);
 
 			const path& pathToShow(directory);
-
+			path p = current_path();
 
 			for (const auto & entry : directory_iterator(pathToShow))
 			{
+				
+				p = entry.path();
 
 				name = entry.path().filename().string();
 				extension = entry.path().extension().string();
-				auto dia = fs::last_write_time(directory);
+
+				//auto dia = last_write_time(directory);
 				//date = entry.path().extension().string();
-				std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
+				//std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
 				//fs::last_write_time(directory,dia);
 				//fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 hour to the future
-				dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
+				//dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
+				
+				file_time_type ftime = last_write_time(entry.path());
+				time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
 				date = std::asctime(std::localtime(&cftime));
+
+				
 
 				try {
 					size = file_size(entry.path());
-
 				}
 				catch (filesystem_error& e)
 				{
 					size = 0;
-					//date = 10;
 				}
 
 				if (extension == "" && size == 0)
 				{
 					extension = "carpeta";
-					//date = CHANGEDATE(rand() % 5 + 1);
+					
 				}
 
-
+				fecha = Transformar_string(date);
 				name = remove_extension(name);
 				extension = remove_name(extension);
-				Archivos_vector.push_back(new Archivo(name, extension, size, date));
+				Archivos_vector.push_back(new Archivo(name, extension, size,fecha));
 			}
 
 
@@ -445,7 +497,7 @@ namespace Project1 {
 				sizTree->Add(it);
 				dattree->Add(it);
 			}
-
+			
 			nameTree->Recuperar_Elementos();
 			nameTree->Mostrar_Elementos(listView1);
 			//nameTree->Recuperar()
@@ -468,7 +520,7 @@ namespace Project1 {
 			if (listView1->Items[i]->SubItems[1]->Text == "carpeta")
 			{
 				listView1->Items[i]->ImageIndex = 0;
-				CHANGEDATE(rand() % 5);
+				
 			}
 
 
@@ -476,49 +528,49 @@ namespace Project1 {
 			else if (listView1->Items[i]->SubItems[1]->Text == "xlsx")
 			{
 				listView1->Items[i]->ImageIndex = 2;
-				CHANGEDATE(rand() % 5);
+				
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "jpg" || listView1->Items[i]->SubItems[1]->Text == "JPG")
 			{
 				listView1->Items[i]->ImageIndex = 3;
-				CHANGEDATE(rand() % 5);
+				
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "pdf")
 			{
 				listView1->Items[i]->ImageIndex = 4;
-				CHANGEDATE(rand() % 5);
+				
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "png")
 			{
 				listView1->Items[i]->ImageIndex = 5;
-				CHANGEDATE(rand() % 5);
+				
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "ppt")
 			{
 				listView1->Items[i]->ImageIndex = 6;
-				CHANGEDATE(rand() % 5);
+				
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "rar")
 			{
 				listView1->Items[i]->ImageIndex = 7;
-				CHANGEDATE(rand() % 5);
+				
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "doc" || listView1->Items[i]->SubItems[1]->Text == "docx")
 			{
 				listView1->Items[i]->ImageIndex = 8;
-				CHANGEDATE(rand() % 5);
+				
 			}
 
 			else if (listView1->Items[i]->SubItems[1]->Text == "zip")
 			{
 				listView1->Items[i]->ImageIndex = 9;
-				CHANGEDATE(rand() % 5);
+				
 			}
 			else
 			{
@@ -615,7 +667,7 @@ namespace Project1 {
 
 			vector<Archivo*>Archivitos_vector;
 
-
+			
 			string name = "";
 			string extension = "";
 			string directory = "";
@@ -626,18 +678,20 @@ namespace Project1 {
 
 			const path& pathToShowing(directory);
 
+			
 
 			for (const auto & entry : recursive_directory_iterator(pathToShowing))
 			{
 
 				name = entry.path().filename().string();
 				extension = entry.path().extension().string();
-				auto dia = fs::last_write_time(directory);
-				//date = entry.path().extension().string();
-				std::time_t cftime = decltype(dia)::clock::to_time_t(dia);
-				//fs::last_write_time(directory, dia + 1h); // es necesario este aumento, al parecer para que tome la hora xd move file write time 1 ho
-				dia = fs::last_write_time(directory); // esta linea es la que hace la dichosa funcion.
+				
+				file_time_type ftime = last_write_time(entry.path());
+				time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
 				date = std::asctime(std::localtime(&cftime));
+			
+				
+				
 
 				try {
 					size = file_size(entry.path());
@@ -652,13 +706,13 @@ namespace Project1 {
 				if (extension == "" && size == 0)
 				{
 					extension = "carpeta";
-					//date = CHANGEDATE(rand() % 5 + 1);
+					
 				}
 
-
+				//Transformar_string(date);
 				name = remove_extension(name);
 				extension = remove_name(extension);
-				Archivitos_vector.push_back(new Archivo(name, extension, size, date));
+				//Archivitos_vector.push_back(new Archivo(name, extension, size, date));
 			}
 
 			listView1->Items->Clear();
@@ -677,8 +731,8 @@ namespace Project1 {
 
 
 
-			RecursivoName->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
-			RecursivoExt->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
+			//RecursivoName->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
+			//RecursivoExt->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
 			//nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
 			Asignar_iconos();
 

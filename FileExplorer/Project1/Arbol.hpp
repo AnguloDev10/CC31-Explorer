@@ -147,7 +147,15 @@ private:
 			elemen = *it ;
 			name = gcnew String(elemen->Get_Name().c_str());
 			ext = gcnew String(elemen->Get_Extension().c_str());
-			date = gcnew String(elemen->Get_Date().c_str());
+			date = gcnew String(  
+				
+				(  (elemen->Get_Date()/1000000) < 10? "0"+ (elemen->Get_Date() / 1000000).ToString() : (elemen->Get_Date() / 1000000).ToString() ) + "/" +
+				(  ((elemen->Get_Date() / 10000)%100) < 10 ? "0" + ((elemen->Get_Date() / 10000) % 100).ToString() : ((elemen->Get_Date() / 10000) % 100).ToString()     )+ "/" +
+				(elemen->Get_Date() % 10000).ToString()  
+			
+			);
+			
+			
 			tamaño = gcnew String (elemen->Get_Size().ToString());
 
 			ITEM = gcnew ListViewItem(name);

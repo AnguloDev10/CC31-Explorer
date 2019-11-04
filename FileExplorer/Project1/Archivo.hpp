@@ -10,14 +10,14 @@ private:
 	string name;
 	string extension;
 	long long size;
-	string date;
+	long date;
 public:
-	Archivo(string name, string extension, long long size, string fecha) : name(name), extension(extension), size(size), date(fecha) {}
+	Archivo(string name, string extension, long long size, long date) : name(name), extension(extension), size(size), date(date) {}
 	~Archivo() {}
 	string Get_Name() { return name; }
 	string Get_Extension() { return extension; }
 	long long Get_Size() { return size; }
-	string Get_Date() { return date; }
+	long Get_Date() { return date; }
 
 };
 

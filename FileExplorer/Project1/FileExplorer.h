@@ -437,12 +437,12 @@ namespace Project1 {
 			MarshalString(DirectoryTbx->Text, directory);
 
 			const path& pathToShow(directory);
-			path p = current_path();
+			
 
 			for (const auto & entry : directory_iterator(pathToShow))
 			{
 				
-				p = entry.path();
+				
 
 				name = entry.path().filename().string();
 				extension = entry.path().extension().string();

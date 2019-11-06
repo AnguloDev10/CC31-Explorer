@@ -154,7 +154,7 @@ private:
 				(elemen->Get_Date() % 10000).ToString()  
 			
 			);
-			
+			/* que raro ya funciona   */
 			
 			tamaño = gcnew String (elemen->Get_Size().ToString());
 

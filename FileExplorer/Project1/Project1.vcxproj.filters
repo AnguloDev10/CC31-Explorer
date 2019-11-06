@@ -35,9 +35,6 @@
     <ClCompile Include="FileExplorer.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FileExplorer.resx">

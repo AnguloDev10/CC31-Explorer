@@ -45,14 +45,23 @@ namespace Project1 {
 		TreeExt* extTree;
 		TreeDate* dattree;
 		TreeSize *sizTree;
-		TreeName* RecursivoName;
-		TreeExt* RecursivoExt;
+		
 
 	private: System::Windows::Forms::Label^  Cant_Elem;
 	private: System::Windows::Forms::ImageList^  imageList1;
 	private: System::Windows::Forms::TextBox^  textBox1;
 	private: System::Windows::Forms::Button^  button4;
 	private: System::Windows::Forms::TextBox^  SearchTxbox;
+	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::ComboBox^  Filtro1Box;
+	private: System::Windows::Forms::ComboBox^  Filtro2Box;
+
+
+	private: System::Windows::Forms::TextBox^  textBox2;
+	private: System::Windows::Forms::Button^  button5;
+	private: System::Windows::Forms::Button^  button6;
+	private: System::Windows::Forms::TextBox^  textBox3;
 	private: System::Windows::Forms::Button^  ButtonSearch;
 
 
@@ -76,8 +85,7 @@ namespace Project1 {
 			extTree = new TreeExt(mylambdas->Return_Extension());
 			sizTree = new TreeSize(mylambdas->Return_Size());
 			dattree = new TreeDate(mylambdas->Return_Date());
-			RecursivoName = new TreeName(mylambdas->Return_Name());
-			RecursivoExt = new TreeName(mylambdas->Return_Extension());
+			
 		}
 
 	protected:
@@ -92,9 +100,9 @@ namespace Project1 {
 			}
 		}
 
-		//ListViewItem ^ItemLista;
-
-
+		//bool Bsearch = false;
+		//bool Brefresh = false;
+		int cont = 0;
 
 
 
@@ -145,6 +153,14 @@ namespace Project1 {
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->SearchTxbox = (gcnew System::Windows::Forms::TextBox());
 			this->ButtonSearch = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->Filtro1Box = (gcnew System::Windows::Forms::ComboBox());
+			this->Filtro2Box = (gcnew System::Windows::Forms::ComboBox());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->button6 = (gcnew System::Windows::Forms::Button());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -200,7 +216,7 @@ namespace Project1 {
 					this->Fecha, this->Tamaño
 			});
 			this->listView1->GridLines = true;
-			this->listView1->Location = System::Drawing::Point(13, 76);
+			this->listView1->Location = System::Drawing::Point(13, 118);
 			this->listView1->Name = L"listView1";
 			this->listView1->Size = System::Drawing::Size(848, 296);
 			this->listView1->TabIndex = 5;
@@ -232,7 +248,7 @@ namespace Project1 {
 			// Cant_Elem
 			// 
 			this->Cant_Elem->AutoSize = true;
-			this->Cant_Elem->Location = System::Drawing::Point(12, 387);
+			this->Cant_Elem->Location = System::Drawing::Point(12, 429);
 			this->Cant_Elem->Name = L"Cant_Elem";
 			this->Cant_Elem->Size = System::Drawing::Size(64, 13);
 			this->Cant_Elem->TabIndex = 6;
@@ -285,11 +301,89 @@ namespace Project1 {
 			this->ButtonSearch->UseVisualStyleBackColor = false;
 			this->ButtonSearch->Click += gcnew System::EventHandler(this, &FileExplorer::ButtonSearch_Click);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(12, 82);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(53, 13);
+			this->label1->TabIndex = 9;
+			this->label1->Text = L"Filtrar por ";
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(587, 82);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(53, 13);
+			this->label2->TabIndex = 10;
+			this->label2->Text = L"Filtrar por ";
+			// 
+			// Filtro1Box
+			// 
+			this->Filtro1Box->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->Filtro1Box->FormattingEnabled = true;
+			this->Filtro1Box->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Empieza con", L"Finzaliza con", L"Contiene" });
+			this->Filtro1Box->Location = System::Drawing::Point(71, 79);
+			this->Filtro1Box->Name = L"Filtro1Box";
+			this->Filtro1Box->Size = System::Drawing::Size(88, 21);
+			this->Filtro1Box->TabIndex = 11;
+			// 
+			// Filtro2Box
+			// 
+			this->Filtro2Box->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->Filtro2Box->FormattingEnabled = true;
+			this->Filtro2Box->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Mayor a", L"Menor a", L"Igua a" });
+			this->Filtro2Box->Location = System::Drawing::Point(646, 79);
+			this->Filtro2Box->Name = L"Filtro2Box";
+			this->Filtro2Box->Size = System::Drawing::Size(88, 21);
+			this->Filtro2Box->TabIndex = 12;
+			// 
+			// textBox2
+			// 
+			this->textBox2->Location = System::Drawing::Point(165, 79);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(59, 20);
+			this->textBox2->TabIndex = 13;
+			// 
+			// button5
+			// 
+			this->button5->Location = System::Drawing::Point(230, 77);
+			this->button5->Name = L"button5";
+			this->button5->Size = System::Drawing::Size(54, 23);
+			this->button5->TabIndex = 14;
+			this->button5->Text = L"Aceptar";
+			this->button5->UseVisualStyleBackColor = true;
+			// 
+			// button6
+			// 
+			this->button6->Location = System::Drawing::Point(805, 77);
+			this->button6->Name = L"button6";
+			this->button6->Size = System::Drawing::Size(54, 23);
+			this->button6->TabIndex = 16;
+			this->button6->Text = L"Aceptar";
+			this->button6->UseVisualStyleBackColor = true;
+			// 
+			// textBox3
+			// 
+			this->textBox3->Location = System::Drawing::Point(740, 79);
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->Size = System::Drawing::Size(59, 20);
+			this->textBox3->TabIndex = 15;
+			// 
 			// FileExplorer
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(874, 422);
+			this->ClientSize = System::Drawing::Size(874, 452);
+			this->Controls->Add(this->button6);
+			this->Controls->Add(this->textBox3);
+			this->Controls->Add(this->button5);
+			this->Controls->Add(this->textBox2);
+			this->Controls->Add(this->Filtro2Box);
+			this->Controls->Add(this->Filtro1Box);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->label1);
 			this->Controls->Add(this->ButtonSearch);
 			this->Controls->Add(this->SearchTxbox);
 			this->Controls->Add(this->Cant_Elem);
@@ -373,7 +467,7 @@ namespace Project1 {
 			mes = 12;
 
 		resultado_final = (dia * 1000000) + (mes * 10000) + (año);
-		//string 
+		
 		return resultado_final;
 	}
 
@@ -381,35 +475,14 @@ namespace Project1 {
 
 	private: System::Void FileExplorer_Load(System::Object^  sender, System::EventArgs^  e)
 	{
-
+		Filtro1Box->SelectedIndex = 0;
+		Filtro2Box->SelectedIndex = 0;
 		listView1->SmallImageList = imageList1;
 		listView1->AllowColumnReorder = false;
 		listView1->AllowDrop = false;
 	}
 
-	private: string  CHANGEDATE(int tipo)
-	{
-		int type = tipo;
-		string date = " ";
-		switch (type)
-		{
-		case 1:
-			date = "1/7/18";
-			break;
-		case 2:
-			date = "4/7/18";
-			break;
-		case 3:
-			date = "9/10/19";
-		case 4:
-			date = "17/8/19";
-			break;
-		case 5:
-			date = "25/10/17";
-			break;
-		}
-		return date;
-	}
+	
 
 
 
@@ -417,6 +490,8 @@ namespace Project1 {
 
 	private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e)
 	{
+		//Brefresh = true;
+		//Bsearch = false;
 
 		if (DirectoryTbx->Text->Length > 0)
 		{
@@ -498,10 +573,13 @@ namespace Project1 {
 				dattree->Add(it);
 			}
 			
-			nameTree->Recuperar_Elementos();
-			nameTree->Mostrar_Elementos(listView1);
-			//nameTree->Recuperar()
-			//nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
+			nameTree->Listar_Elementos();
+			extTree-> Listar_Elementos();
+			sizTree-> Listar_Elementos();
+			dattree-> Listar_Elementos();
+
+			nameTree->Mostrar_Elementos_As(listView1);
+			
 			Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";
 
 
@@ -634,17 +712,63 @@ namespace Project1 {
 	}
 	private: System::Void listView1_ColumnClick(System::Object^  sender, System::Windows::Forms::ColumnClickEventArgs^  e)
 	{
-
 		listView1->Items->Clear();
+		
 
-		/*switch (e->Column)
+		//if (Brefresh)
+		//{
+			cont++;
+			if (cont % 2 == 0)
+			{
+				switch (e->Column)
+				{
+				case 0:nameTree->Mostrar_Elementos_As(listView1); break;
+				case 1:extTree->Mostrar_Elementos_As(listView1); break;
+				case 2:dattree->Mostrar_Elementos_As(listView1); break;
+				case 3:sizTree->Mostrar_Elementos_As(listView1); break;
+				}
+			}
+
+			else
+			{
+				switch (e->Column)
+				{
+				case 0:nameTree->Mostrar_Elementos_Des(listView1); break;
+				case 1:extTree->Mostrar_Elementos_Des(listView1); break;
+				case 2:dattree->Mostrar_Elementos_Des(listView1); break;
+				case 3:sizTree->Mostrar_Elementos_Des(listView1); break;
+				}
+			}
+
+		//}
+
+		/*if (Bsearch)
 		{
-		case 0:nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
-		case 1:extTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
-		case 2:dattree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;; break;
-		case 3:sizTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
-			case 4: dattree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension()/*,mylambdas->Return_Date(), mylambdas->Return_Size(), listView1); break;
-		}*/
+			cont++;
+			if (cont % 2 != 0)
+			{
+				switch (e->Column)
+				{
+				case 0:RecursivoName->Mostrar_Elementos_As(listView1); break;
+				case 1:RecursivoExt->Mostrar_Elementos_As(listView1); break;
+				case 2:dattree->Mostrar_Elementos_As(listView1); break;
+				case 3:sizTree->Mostrar_Elementos_As(listView1); break;
+				}
+			}
+
+			else
+			{
+				switch (e->Column)
+				{
+				case 0:RecursivoName->Mostrar_Elementos_Des(listView1); break;
+				case 1:RecursivoExt->Mostrar_Elementos_Des(listView1); break;
+				case 2:dattree->Mostrar_Elementos_Des(listView1); break;
+				case 3:sizTree->Mostrar_Elementos_Des(listView1); break;
+				}
+			}*/
+
+		
+
 
 		Asignar_iconos();
 
@@ -656,7 +780,8 @@ namespace Project1 {
 	}
 	private: System::Void ButtonSearch_Click(System::Object^  sender, System::EventArgs^  e)
 	{
-
+		//Brefresh = false;
+		//Bsearch = true;
 
 		if (SearchTxbox->TextLength > 0 && DirectoryTbx->TextLength > 0)
 		{
@@ -673,7 +798,7 @@ namespace Project1 {
 			string directory = "";
 			string date = "";
 			long long size = 0;
-			long long fecha = 0;
+			long  fecha = 0;
 			MarshalString(DirectoryTbx->Text, directory);
 
 			const path& pathToShowing(directory);
@@ -709,31 +834,39 @@ namespace Project1 {
 					
 				}
 
-				//Transformar_string(date);
+				fecha = Transformar_string(date);
 				name = remove_extension(name);
 				extension = remove_name(extension);
-				//Archivitos_vector.push_back(new Archivo(name, extension, size, date));
+				if (extension == "JPG") extension = "jpg";
+
+				if(name == nombre || extension == nombre)
+				Archivitos_vector.push_back(new Archivo(name, extension, size, fecha));
 			}
 
 			listView1->Items->Clear();
-			RecursivoName->Limpiar_Arbol();
-			RecursivoExt->Limpiar_Arbol();
 
+			nameTree->Limpiar_Arbol();
+			sizTree->Limpiar_Arbol();
+			extTree->Limpiar_Arbol();
+			dattree->Limpiar_Arbol();
 
 			for (auto it : Archivitos_vector)
 			{
-				RecursivoName->Add(it);
-				RecursivoExt->Add(it);
-
+				nameTree->Add(it);
+				sizTree->Add(it);
+				extTree->Add(it);
+				dattree->Add(it);
 
 			}
 
+			
+			nameTree->Listar_Elementos();
+			sizTree->Listar_Elementos();
+			extTree->Listar_Elementos();
+			dattree->Listar_Elementos();
 
-
-
-			//RecursivoName->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
-			//RecursivoExt->find(nombre, mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
-			//nameTree->Recuperar(mylambdas->Return_Name(), mylambdas->Return_Extension(), mylambdas->Return_Date(), mylambdas->Return_Size(), listView1);
+			nameTree->Mostrar_Elementos_As(listView1);
+			
 			Asignar_iconos();
 
 			Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";

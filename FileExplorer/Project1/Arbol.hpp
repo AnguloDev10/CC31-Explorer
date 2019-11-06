@@ -84,7 +84,7 @@ private:
 		return node;
 	}
 
-	void find(Nodo *node, Comparable val,function<string(T)> Items, function<string(T)> SubItem, function<string(T)> SubItem2, function<long long(T)> SubItem3, System::Windows::Forms::ListView^listview1)
+	void find(Nodo *node, Comparable val)
 	{
 
 
@@ -93,38 +93,23 @@ private:
 			if (val == key(node->elem))
 			{
 				
-				ListViewItem^ITEM;
-				String^name = gcnew String(Items(node->elem).c_str());
-				String^ext = gcnew String(SubItem(node->elem).c_str());
-				String^date = gcnew String(SubItem2(node->elem).c_str());
-				String^size = gcnew String(to_string(SubItem3(node->elem)).c_str());
+				Lista_Enlazada->agregar_final(node->elem);
 
-				size = size + " bytes";
-
-				ITEM = gcnew ListViewItem(name);
-				ITEM->SubItems->Add(ext);
-				ITEM->SubItems->Add(date);
-				ITEM->SubItems->Add(size);
-				listview1->Items->Add(ITEM);
 			}
-			find(node->left, val, Items,SubItem,SubItem2,SubItem3,listview1);
-			find(node->right, val, Items, SubItem, SubItem2, SubItem3, listview1);
+			find(node->left, val);
+			find(node->right, val);
 
 		}
 	}
 
 
-	void Recuperar_Elementos(Nodo* node)
+	void Listar_Elementos(Nodo* node)
 	{
 		if (node != nullptr && len >0)
 		{
-			Recuperar_Elementos(node->left);
-
-			
+			Listar_Elementos(node->left);
 			Lista_Enlazada->agregar_final(node->elem);
-			//Lista_Enlazada->Mostrar_Ascendente(Lista_Enlazada, listview1);
-
-			Recuperar_Elementos(node->right);
+			Listar_Elementos(node->right);
 		}
 
 	}
@@ -133,6 +118,7 @@ private:
 
 	void Mostrar_Ascendente(System::Windows::Forms::ListView^ tabla)
 	{
+		
 		ListViewItem^ITEM;
 		Archivo *elemen;
 		String^ name, ^ext, ^date,^tamaño;
@@ -166,6 +152,41 @@ private:
 		}
 	}
 	
+	void Mostrar_Descendente(System::Windows::Forms::ListView^ tabla)
+	{
+	
+		ListViewItem^ITEM;
+		Archivo *elemen;
+		String^ name, ^ext, ^date, ^tamaño;
+		//name = gcnew String("");
+		ext = gcnew String("");
+		date = gcnew String("");
+		tamaño = gcnew String("");
+
+
+		for (lista<T>::Iterador it = Lista_Enlazada->ultimo(); it != nullptr; --it)
+		{
+			elemen = *it;
+			name = gcnew String(elemen->Get_Name().c_str());
+			ext = gcnew String(elemen->Get_Extension().c_str());
+			date = gcnew String(
+
+				((elemen->Get_Date() / 1000000) < 10 ? "0" + (elemen->Get_Date() / 1000000).ToString() : (elemen->Get_Date() / 1000000).ToString()) + "/" +
+				(((elemen->Get_Date() / 10000) % 100) < 10 ? "0" + ((elemen->Get_Date() / 10000) % 100).ToString() : ((elemen->Get_Date() / 10000) % 100).ToString()) + "/" +
+				(elemen->Get_Date() % 10000).ToString()
+
+			);
+			/* que raro ya funciona   */
+
+			tamaño = gcnew String(elemen->Get_Size().ToString());
+
+			ITEM = gcnew ListViewItem(name);
+			ITEM->SubItems->Add(ext);
+			ITEM->SubItems->Add(date);
+			ITEM->SubItems->Add(tamaño);
+			tabla->Items->Add(ITEM);
+		}
+	}
 
 	void InOrder(Nodo* node, function<void(T)> imprimir)
 	{
@@ -228,7 +249,7 @@ private:
 
 
 public:
-	Tree(function<Comparable(T)>key = [](T a) {return a; }) : root(nullptr), key(key), len(0)/*, Lista_Enlazada(nullptr)*/ { Lista_Enlazada = new lista<T>(); }
+	Tree(function<Comparable(T)>key = [](T a) {return a; }) : root(nullptr), key(key), len(0) { Lista_Enlazada = new lista<T>(); }
 	~Tree() { Destroy(root); }
 
 	void Add(T elem)
@@ -243,9 +264,9 @@ public:
 		InOrder(root, imprimir);
 	}
 
-	void Recuperar_Elementos()
+	void Listar_Elementos()
 	{
-		return Recuperar_Elementos(root);
+		return Listar_Elementos(root);
 	}
 
 	bool remove(Comparable val) {
@@ -303,18 +324,20 @@ public:
 		return len;
 	}
 
-	void find(Comparable val, function<string(T)> Items, function<string(T)> SubItem, function<string(T)> SubItem2, function<long long(T)> SubItem3, System::Windows::Forms::ListView^listview1)
+	void find(Comparable val)
 	{
-		find(root, val, Items,SubItem,SubItem2,SubItem3,listview1);
+		return find(root, val);
 	}
 
-	void Mostrar_Elementos(System::Windows::Forms::ListView ^tabla)
+	void Mostrar_Elementos_As(System::Windows::Forms::ListView ^tabla)
 	{
-		//return Mostrar_Elementos(tabla);
 		return Mostrar_Ascendente(tabla);
 	}
 
-	
+	void Mostrar_Elementos_Des(System::Windows::Forms::ListView ^tabla)
+	{
+		return Mostrar_Descendente(tabla);
+	}
 
 
 };

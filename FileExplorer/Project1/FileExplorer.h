@@ -466,7 +466,7 @@ namespace Project1 {
 		else if (TempMonth == "Dec")
 			mes = 12;
 
-		resultado_final = (dia * 1000000) + (mes * 10000) + (año);
+	resultado_final = (año * 10000) + (mes * 100) + (dia);
 		
 		return resultado_final;
 	}
@@ -740,32 +740,7 @@ namespace Project1 {
 				}
 			}
 
-		//}
-
-		/*if (Bsearch)
-		{
-			cont++;
-			if (cont % 2 != 0)
-			{
-				switch (e->Column)
-				{
-				case 0:RecursivoName->Mostrar_Elementos_As(listView1); break;
-				case 1:RecursivoExt->Mostrar_Elementos_As(listView1); break;
-				case 2:dattree->Mostrar_Elementos_As(listView1); break;
-				case 3:sizTree->Mostrar_Elementos_As(listView1); break;
-				}
-			}
-
-			else
-			{
-				switch (e->Column)
-				{
-				case 0:RecursivoName->Mostrar_Elementos_Des(listView1); break;
-				case 1:RecursivoExt->Mostrar_Elementos_Des(listView1); break;
-				case 2:dattree->Mostrar_Elementos_Des(listView1); break;
-				case 3:sizTree->Mostrar_Elementos_Des(listView1); break;
-				}
-			}*/
+		
 
 		
 
@@ -782,6 +757,7 @@ namespace Project1 {
 	{
 		//Brefresh = false;
 		//Bsearch = true;
+		Cursor->Current = Cursors::AppStarting;
 
 		if (SearchTxbox->TextLength > 0 && DirectoryTbx->TextLength > 0)
 		{

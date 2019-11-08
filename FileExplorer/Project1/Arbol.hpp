@@ -130,17 +130,17 @@ private:
 
 		for (lista<T>::Iterador it = Lista_Enlazada->inicial(); it != nullptr; ++it)
 		{
-			elemen = *it ;
+			elemen = *it;
 			name = gcnew String(elemen->Get_Name().c_str());
 			ext = gcnew String(elemen->Get_Extension().c_str());
-			date = gcnew String(  
-				
-				(  (elemen->Get_Date()/1000000) < 10? "0"+ (elemen->Get_Date() / 1000000).ToString() : (elemen->Get_Date() / 1000000).ToString() ) + "/" +
-				(  ((elemen->Get_Date() / 10000)%100) < 10 ? "0" + ((elemen->Get_Date() / 10000) % 100).ToString() : ((elemen->Get_Date() / 10000) % 100).ToString()     )+ "/" +
-				(elemen->Get_Date() % 10000).ToString()  
+			date = gcnew String(
+
+				((elemen->Get_Date() % 100) < 10 ? "0" + (elemen->Get_Date() % 100).ToString() : (elemen->Get_Date() % 100).ToString()) + "/" +
+				(((elemen->Get_Date() / 100) % 100) < 10 ? "0" + ((elemen->Get_Date() / 100) % 100).ToString() : ((elemen->Get_Date() / 100) % 100).ToString()) + "/" +
+				(elemen->Get_Date()/ 10000).ToString()
 			
 			);
-			/* que raro ya funciona   */
+			
 			
 			tamaño = gcnew String (elemen->Get_Size().ToString());
 
@@ -171,13 +171,12 @@ private:
 			ext = gcnew String(elemen->Get_Extension().c_str());
 			date = gcnew String(
 
-				((elemen->Get_Date() / 1000000) < 10 ? "0" + (elemen->Get_Date() / 1000000).ToString() : (elemen->Get_Date() / 1000000).ToString()) + "/" +
-				(((elemen->Get_Date() / 10000) % 100) < 10 ? "0" + ((elemen->Get_Date() / 10000) % 100).ToString() : ((elemen->Get_Date() / 10000) % 100).ToString()) + "/" +
-				(elemen->Get_Date() % 10000).ToString()
+				((elemen->Get_Date() % 100) < 10 ? "0" + (elemen->Get_Date() % 100).ToString() : (elemen->Get_Date() % 100).ToString()) + "/" +
+				(((elemen->Get_Date() / 100) % 100) < 10 ? "0" + ((elemen->Get_Date() / 100) % 100).ToString() : ((elemen->Get_Date() / 100) % 100).ToString()) + "/" +
+				(elemen->Get_Date() / 10000).ToString()
 
 			);
-			/* que raro ya funciona   */
-
+			
 			tamaño = gcnew String(elemen->Get_Size().ToString());
 
 			ITEM = gcnew ListViewItem(name);

@@ -126,10 +126,12 @@ private:
 		ext = gcnew String("");
 		date = gcnew String("");
 		tamaño = gcnew String("");
-
+		int a = 0;
+		float b = 0.0;
 
 		for (lista<T>::Iterador it = Lista_Enlazada->inicial(); it != nullptr; ++it)
 		{
+
 			elemen = *it;
 			name = gcnew String(elemen->Get_Name().c_str());
 			ext = gcnew String(elemen->Get_Extension().c_str());
@@ -142,7 +144,28 @@ private:
 			);
 			
 			
-			tamaño = gcnew String (elemen->Get_Size().ToString());
+			if (elemen->Get_Size() < 1024)
+				tamaño = gcnew String(elemen->Get_Size().ToString() + " B");
+			else if (elemen->Get_Size() >= 1024 && elemen->Get_Size() < 1048576)
+			{
+				a = ((long float)elemen->Get_Size() / (float)1024) * 100;
+				b = a * 0.01;
+				tamaño = gcnew String(b.ToString() + " KB");
+			}
+			else if (elemen->Get_Size() >= 1048576 && elemen->Get_Size() < 1073741824)
+			{
+				a = ((long float)elemen->Get_Size() / (long float)1048576) * 100;
+				b = a * 0.01;
+				tamaño = gcnew String(b.ToString() + " MB");
+			}
+			else if (elemen->Get_Size() > 1073741824)
+			{
+
+				a = ((long float)elemen->Get_Size() / (long float)1073741824) * 100;
+				b = a * 0.01;
+				tamaño = gcnew String(b.ToString() + " GB");
+			}
+
 
 			ITEM = gcnew ListViewItem(name);
 			ITEM->SubItems->Add(ext);
@@ -162,14 +185,18 @@ private:
 		ext = gcnew String("");
 		date = gcnew String("");
 		tamaño = gcnew String("");
-
+		int a = 0;
+		float b = 0.0;
 
 		for (lista<T>::Iterador it = Lista_Enlazada->ultimo(); it != nullptr; --it)
 		{
+			
 			elemen = *it;
 			name = gcnew String(elemen->Get_Name().c_str());
 			ext = gcnew String(elemen->Get_Extension().c_str());
 			date = gcnew String(
+			
+
 
 				((elemen->Get_Date() % 100) < 10 ? "0" + (elemen->Get_Date() % 100).ToString() : (elemen->Get_Date() % 100).ToString()) + "/" +
 				(((elemen->Get_Date() / 100) % 100) < 10 ? "0" + ((elemen->Get_Date() / 100) % 100).ToString() : ((elemen->Get_Date() / 100) % 100).ToString()) + "/" +
@@ -177,7 +204,30 @@ private:
 
 			);
 			
-			tamaño = gcnew String(elemen->Get_Size().ToString());
+			if (elemen->Get_Size() < 1024)
+			    tamaño = gcnew String(elemen->Get_Size().ToString() + " B");
+			else if (elemen->Get_Size() >= 1024 && elemen->Get_Size() < 1048576)
+			{
+				a = ((long float)elemen->Get_Size() / (float)1024) * 100;
+				b = a * 0.01;
+				tamaño = gcnew String(b.ToString() + " KB");
+			}
+			else if (elemen->Get_Size() >= 1048576 && elemen->Get_Size() < 1073741824)
+			{
+				a = ((long float)elemen->Get_Size() / (long float)1048576)*100;
+				b = a * 0.01;
+				tamaño = gcnew String(b.ToString() + " MB");
+			}
+			else if (elemen->Get_Size() > 1073741824)
+			{
+				
+				a =  ((long float)elemen->Get_Size() / (long float)1073741824)* 100;
+				b = a * 0.01;
+				tamaño = gcnew String(b.ToString() + " GB");
+			}
+
+
+		
 
 			ITEM = gcnew ListViewItem(name);
 			ITEM->SubItems->Add(ext);

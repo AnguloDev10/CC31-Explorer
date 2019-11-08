@@ -354,6 +354,7 @@ namespace Project1 {
 			this->button5->TabIndex = 14;
 			this->button5->Text = L"Aceptar";
 			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &FileExplorer::button5_Click);
 			// 
 			// button6
 			// 
@@ -850,5 +851,26 @@ namespace Project1 {
 		}
 
 	}
-	};
+	private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+		if (Filtro1Box->SelectedIndex == 0)
+		{
+				
+		}
+
+		else if (Filtro1Box->SelectedIndex == 1)
+		{
+
+		}
+		else if (Filtro1Box->SelectedIndex == 3)
+		{
+
+		}
+
+		else
+		{
+
+		}
+	}
+};
 }

@@ -85,6 +85,40 @@ public:
 		};
 		return l7;
 	}
+	auto Return_Size_mayor() {
+		auto l8 = [](Archivo*obtener, long long valor) {
+			long long temp = 0;
+			if (obtener->Get_Size() > valor)
+			{
+				temp = valor;
+			}
+			else
+				temp = -1;
+			return temp;
+		};
+		return l8;
+	}
+	auto Return_Size_menor() {
+		auto l9 = [](Archivo*obtener, long long valor) {
+			long long temp = 0;
+			if (obtener->Get_Size() < valor)
+			{
+				temp = valor;
+			}
+			else
+				temp = -1;
+			return temp;
+		};
+		return l9;
+	}
+
+	auto Return_Size_igual() {
+		auto l10 = [](Archivo*obtener, long long valor) {
+			return obtener->Get_Size();
+		};
+		return l10;
+	}
+
 };
 
 #endif // !_Lambdas_H_

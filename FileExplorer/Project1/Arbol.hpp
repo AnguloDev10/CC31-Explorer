@@ -182,7 +182,7 @@ private:
 				b = a * 0.01;
 				tamaño = gcnew String(b.ToString() + " GB");
 			}
-
+			//tamaño = gcnew String(elemen->Get_Size().ToString());
 
 			ITEM = gcnew ListViewItem(name);
 			ITEM->SubItems->Add(ext);

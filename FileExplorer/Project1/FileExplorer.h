@@ -66,6 +66,7 @@ namespace Project1 {
 	private: System::Windows::Forms::Button^  button5;
 	private: System::Windows::Forms::Button^  button6;
 	private: System::Windows::Forms::TextBox^  textBox3;
+	private: System::Windows::Forms::ComboBox^  PesosBox;
 	private: System::Windows::Forms::Button^  ButtonSearch;
 
 
@@ -170,6 +171,7 @@ namespace Project1 {
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->button6 = (gcnew System::Windows::Forms::Button());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->PesosBox = (gcnew System::Windows::Forms::ComboBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -333,7 +335,7 @@ namespace Project1 {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(1565, 196);
+			this->label2->Location = System::Drawing::Point(1453, 193);
 			this->label2->Margin = System::Windows::Forms::Padding(8, 0, 8, 0);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(143, 32);
@@ -356,7 +358,7 @@ namespace Project1 {
 			this->Filtro2Box->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->Filtro2Box->FormattingEnabled = true;
 			this->Filtro2Box->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Mayor a", L"Menor a", L"Igua a" });
-			this->Filtro2Box->Location = System::Drawing::Point(1723, 188);
+			this->Filtro2Box->Location = System::Drawing::Point(1611, 185);
 			this->Filtro2Box->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
 			this->Filtro2Box->Name = L"Filtro2Box";
 			this->Filtro2Box->Size = System::Drawing::Size(228, 39);
@@ -394,17 +396,28 @@ namespace Project1 {
 			// 
 			// textBox3
 			// 
-			this->textBox3->Location = System::Drawing::Point(1973, 188);
+			this->textBox3->Location = System::Drawing::Point(1861, 185);
 			this->textBox3->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->Size = System::Drawing::Size(151, 38);
 			this->textBox3->TabIndex = 15;
+			// 
+			// PesosBox
+			// 
+			this->PesosBox->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->PesosBox->FormattingEnabled = true;
+			this->PesosBox->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"B", L"KB", L"MB", L"GB" });
+			this->PesosBox->Location = System::Drawing::Point(2023, 186);
+			this->PesosBox->Name = L"PesosBox";
+			this->PesosBox->Size = System::Drawing::Size(113, 39);
+			this->PesosBox->TabIndex = 17;
 			// 
 			// FileExplorer
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(16, 31);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(2331, 1078);
+			this->Controls->Add(this->PesosBox);
 			this->Controls->Add(this->button6);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->button5);
@@ -505,6 +518,7 @@ namespace Project1 {
 
 	private: System::Void FileExplorer_Load(System::Object^  sender, System::EventArgs^  e)
 	{
+		PesosBox->SelectedIndex = 0;
 		Filtro1Box->SelectedIndex = 0;
 		Filtro2Box->SelectedIndex = 0;
 		listView1->SmallImageList = imageList1;
@@ -781,7 +795,27 @@ namespace Project1 {
 
 			if (Filtro_peso)
 			{
+				if (cont % 2 == 0)
+				{
+					switch (e->Column)
+					{
+					case 0:nameTree_filtro->Mostrar_Elementos_As(listView1); break;
+					case 1:extTree_filtro->Mostrar_Elementos_As(listView1); break;
+					case 2:dattree_filtro->Mostrar_Elementos_As(listView1); break;
+					case 3:sizTree_filtro->Mostrar_Elementos_As(listView1); break;
+					}
+				}
 
+				else
+				{
+					switch (e->Column)
+					{
+					case 0:nameTree_filtro->Mostrar_Elementos_Des(listView1); break;
+					case 1:extTree_filtro->Mostrar_Elementos_Des(listView1); break;
+					case 2:dattree_filtro->Mostrar_Elementos_Des(listView1); break;
+					case 3:sizTree_filtro->Mostrar_Elementos_Des(listView1); break;
+					}
+				}
 			}
 
 			if(Filtro_nombre == false && Filtro_peso == false) {
@@ -984,6 +1018,76 @@ private: System::Void button6_Click(System::Object^  sender, System::EventArgs^ 
 {
 	Filtro_nombre = false;
 	Filtro_peso = true;
+
+
+	listView1->Items->Clear();
+
+	nameTree_filtro->Limpiar_Arbol();
+	extTree_filtro->Limpiar_Arbol();
+	dattree_filtro->Limpiar_Arbol();
+	sizTree_filtro->Limpiar_Arbol();
+
+	Cursor->Current = Cursors::AppStarting;
+
+
+	if (textBox3->TextLength > 0)
+	{
+		long long numerito = Convert::ToInt64(textBox3->Text);
+		switch (PesosBox->SelectedIndex)
+		{
+		case 0:numerito /= 1; break;
+		case 1:numerito *=1024; break;
+		case 2:numerito *=(1024*1024); break;
+		case 4:numerito *= (1024*1024*1024); break;
+		}
+
+
+
+
+		if (Filtro2Box->SelectedIndex == 0)//peso mayor a
+		{
+
+			sizTree->Filtrar_Elementos(numerito, mylambdas->Return_Size_mayor(), nameTree_filtro, extTree_filtro, sizTree_filtro, dattree_filtro);
+			nameTree_filtro->Listar_Elementos();
+			extTree_filtro->Listar_Elementos();
+			dattree_filtro->Listar_Elementos();
+			sizTree_filtro->Listar_Elementos();
+
+			sizTree_filtro->Mostrar_Elementos_As(listView1);
+		}
+		if (Filtro2Box->SelectedIndex == 1) //menor a
+		{
+			sizTree->Filtrar_Elementos(numerito, mylambdas->Return_Size_menor(), nameTree_filtro, extTree_filtro, sizTree_filtro, dattree_filtro);
+			nameTree_filtro->Listar_Elementos();
+			extTree_filtro->Listar_Elementos();
+			dattree_filtro->Listar_Elementos();
+			sizTree_filtro->Listar_Elementos();
+
+			sizTree_filtro->Mostrar_Elementos_As(listView1);
+		}
+		if (Filtro2Box->SelectedIndex == 2) //igual a
+		{
+			sizTree->Filtrar_Elementos(numerito, mylambdas->Return_Size_igual(), nameTree_filtro, extTree_filtro, sizTree_filtro, dattree_filtro);
+			nameTree_filtro->Listar_Elementos();
+			extTree_filtro->Listar_Elementos();
+			dattree_filtro->Listar_Elementos();
+			sizTree_filtro->Listar_Elementos();
+
+			sizTree_filtro->Mostrar_Elementos_As(listView1);
+		}
+
+	}
+
+
+	else
+	{
+		Filtro_nombre = false;
+		Filtro_peso = false;
+		sizTree->Mostrar_Elementos_As(listView1);
+	}
+
+	Asignar_iconos();
+	Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";
 }
 };
 }

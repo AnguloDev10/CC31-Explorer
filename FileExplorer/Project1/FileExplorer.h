@@ -916,24 +916,33 @@ namespace Project1 {
 
 		string palabrita = "";
 		MarshalString(textBox2->Text, palabrita);
-		if (Filtro1Box->SelectedIndex == 0)//inicia con
+		if (palabrita != "")
 		{
-			nameTree->Filtrar_Elementos(palabrita, mylambdas->Return_Name_inicio(), nameTree_filtro, extTree_filtro, sizTree_filtro, dattree_filtro);
-			nameTree_filtro->Listar_Elementos();
-			extTree_filtro->Listar_Elementos();
-			dattree_filtro->Listar_Elementos();
-			sizTree_filtro->Listar_Elementos();
-			
-			nameTree_filtro->Mostrar_Elementos_As(listView1);
+			if (Filtro1Box->SelectedIndex == 0)//inicia con
+			{
+				nameTree->Filtrar_Elementos(palabrita, mylambdas->Return_Name_inicio(), nameTree_filtro, extTree_filtro, sizTree_filtro, dattree_filtro);
+				nameTree_filtro->Listar_Elementos();
+				extTree_filtro->Listar_Elementos();
+				dattree_filtro->Listar_Elementos();
+				sizTree_filtro->Listar_Elementos();
+
+				nameTree_filtro->Mostrar_Elementos_As(listView1);
+			}
+
+			else if (Filtro1Box->SelectedIndex == 1)
+			{
+
+			}
+			else if (Filtro1Box->SelectedIndex == 2)
+			{
+
+			}
 		}
-
-		else if (Filtro1Box->SelectedIndex == 1)
+		else
 		{
-
-		}
-		else if (Filtro1Box->SelectedIndex == 2)
-		{
-
+			Filtro_nombre = false;
+			Filtro_peso = false;
+			nameTree->Mostrar_Elementos_As(listView1);
 		}
 
 		Asignar_iconos();

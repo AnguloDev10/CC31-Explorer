@@ -103,7 +103,7 @@ private:
 		}
 	}
 	//function<Comparable(T,string)>
-	void Filtrar_elementos(Nodo *node, Comparable val,function<Comparable(T,Comparable)>filtro,Tree*arbol, Tree*arbol2, Tree<T, long long, nullptr>*arbol3, Tree<T, long, nullptr>*arbol4)
+	void Filtrar_elementos(Nodo *node, Comparable val,function<Comparable(T,Comparable)>filtro,Tree<T,string,Nada>*arbol, Tree<T,string,Nada>*arbol2, Tree<T, long long, Nada>*arbol3, Tree<T, long, Nada>*arbol4)
 	{
 		if (node != nullptr)
 		{
@@ -405,7 +405,7 @@ public:
 		return Mostrar_Descendente(tabla);
 	}
 
-	void Filtrar_Elementos(Comparable val, function<Comparable(T, Comparable)>filtro, Tree*arbol, Tree*arbol2, Tree<T, long long, nullptr>*arbol3, Tree<Archivo*, long, nullptr>*arbol4)
+	void Filtrar_Elementos(Comparable val, function<Comparable(T, Comparable)>filtro, Tree<T,string,Nada>*arbol, Tree<T,string,Nada>*arbol2, Tree<T, long long, Nada>*arbol3, Tree<T, long, Nada>*arbol4)
 	{
 		return Filtrar_elementos(root,val, filtro, arbol, arbol2,arbol3,arbol4);
 	}

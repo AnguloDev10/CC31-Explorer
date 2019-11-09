@@ -51,6 +51,40 @@ public:
 		};
 		return l5;
 	}
+
+	auto Return_Name_medio() 
+	{
+		auto l6 = [](Archivo*obtener, string valor) {
+			string particion;
+			if (valor.size() < obtener->Get_Name().size()) {
+				for (int i = 1; i < obtener->Get_Name().size() -valor.size(); ++i) {
+					if (valor == obtener->Get_Name().substr(i, valor.size())) 
+					{
+						particion = obtener->Get_Name().substr(i, valor.size());
+						break;					
+					}
+					else particion = "";
+
+				}
+			}
+			else particion = "";
+			return particion;
+		};
+		return l6;
+	}
+	auto return_name_finaliza()
+	{
+		auto l7 = [](Archivo*obtener, string valor) {
+			string particion;
+			if (valor.size() < obtener->Get_Name().size()) 
+			{
+				particion = obtener->Get_Name().substr(obtener->Get_Name().size()-valor.size(),valor.size());
+			}
+			else particion = "";
+			return particion;
+		};
+		return l7;
+	}
 };
 
 #endif // !_Lambdas_H_

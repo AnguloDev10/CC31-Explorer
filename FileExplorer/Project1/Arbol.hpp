@@ -45,6 +45,7 @@ private:
 				root->left = nullptr;
 				root->right = nullptr;
 				root = nullptr;
+				Lista_Enlazada->Clean_List();
 			}
 		}
 
@@ -101,7 +102,23 @@ private:
 
 		}
 	}
-
+	//function<Comparable(T,string)>
+	void Filtrar_elementos(Nodo *node, Comparable val,function<Comparable(T,Comparable)>filtro,Tree*arbol, Tree*arbol2, Tree<T, long long, nullptr>*arbol3, Tree<T, long, nullptr>*arbol4)
+	{
+		if (node != nullptr)
+		{
+			Filtrar_elementos(node->left, val, filtro, arbol, arbol2, arbol3, arbol4);
+			if (val == filtro(node->elem,val))
+			{
+				
+				arbol->Add(node->elem);
+				arbol2->Add(node->elem);
+				arbol3->Add(node->elem);
+				arbol4->Add(node->elem);
+			}
+			Filtrar_elementos(node->right, val,filtro,arbol,arbol2,arbol3,arbol4);
+		}
+	}
 
 	void Listar_Elementos(Nodo* node)
 	{
@@ -148,20 +165,20 @@ private:
 				tamaño = gcnew String(elemen->Get_Size().ToString() + " B");
 			else if (elemen->Get_Size() >= 1024 && elemen->Get_Size() < 1048576)
 			{
-				a = ((long float)elemen->Get_Size() / (float)1024) * 100;
+				a = ((float)elemen->Get_Size() / (float)1024) * 100;
 				b = a * 0.01;
 				tamaño = gcnew String(b.ToString() + " KB");
 			}
 			else if (elemen->Get_Size() >= 1048576 && elemen->Get_Size() < 1073741824)
 			{
-				a = ((long float)elemen->Get_Size() / (long float)1048576) * 100;
+				a = ((float)elemen->Get_Size() / (float)1048576) * 100;
 				b = a * 0.01;
 				tamaño = gcnew String(b.ToString() + " MB");
 			}
 			else if (elemen->Get_Size() > 1073741824)
 			{
 
-				a = ((long float)elemen->Get_Size() / (long float)1073741824) * 100;
+				a = ((float)elemen->Get_Size() / (float)1073741824) * 100;
 				b = a * 0.01;
 				tamaño = gcnew String(b.ToString() + " GB");
 			}
@@ -208,20 +225,20 @@ private:
 			    tamaño = gcnew String(elemen->Get_Size().ToString() + " B");
 			else if (elemen->Get_Size() >= 1024 && elemen->Get_Size() < 1048576)
 			{
-				a = ((long float)elemen->Get_Size() / (float)1024) * 100;
+				a = ((float)elemen->Get_Size() / (float)1024) * 100;
 				b = a * 0.01;
 				tamaño = gcnew String(b.ToString() + " KB");
 			}
 			else if (elemen->Get_Size() >= 1048576 && elemen->Get_Size() < 1073741824)
 			{
-				a = ((long float)elemen->Get_Size() / (long float)1048576)*100;
+				a = ((float)elemen->Get_Size() / (float)1048576)*100;
 				b = a * 0.01;
 				tamaño = gcnew String(b.ToString() + " MB");
 			}
 			else if (elemen->Get_Size() > 1073741824)
 			{
 				
-				a =  ((long float)elemen->Get_Size() / (long float)1073741824)* 100;
+				a =  ((float)elemen->Get_Size() / (float)1073741824)* 100;
 				b = a * 0.01;
 				tamaño = gcnew String(b.ToString() + " GB");
 			}
@@ -388,7 +405,11 @@ public:
 		return Mostrar_Descendente(tabla);
 	}
 
-
+	void Filtrar_Elementos(Comparable val, function<Comparable(T, Comparable)>filtro, Tree*arbol, Tree*arbol2, Tree<T, long long, nullptr>*arbol3, Tree<Archivo*, long, nullptr>*arbol4)
+	{
+		return Filtrar_elementos(root,val, filtro, arbol, arbol2,arbol3,arbol4);
+	}
+	
 };
 
 

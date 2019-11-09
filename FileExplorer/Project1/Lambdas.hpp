@@ -34,6 +34,23 @@ public:
 		auto l4 = [](Archivo *retorno) { return retorno->Get_Date(); };
 		return l4;
 	}
+
+	auto Return_Name_inicio()
+	{
+		auto l5 = [](Archivo*obtener,string valor) 
+		{
+			string particion;
+			if (valor.size() < obtener->Get_Name().size())
+			{
+				particion = obtener->Get_Name().substr(0, valor.size());
+			}
+			else
+				particion = "";
+
+			return particion;
+		};
+		return l5;
+	}
 };
 
 #endif // !_Lambdas_H_

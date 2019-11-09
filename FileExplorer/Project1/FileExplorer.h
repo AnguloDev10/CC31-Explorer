@@ -46,6 +46,10 @@ namespace Project1 {
 		TreeDate* dattree;
 		TreeSize *sizTree;
 		
+		TreeName* nameTree_filtro;
+		TreeExt* extTree_filtro;
+		TreeDate* dattree_filtro;
+		TreeSize *sizTree_filtro;
 
 	private: System::Windows::Forms::Label^  Cant_Elem;
 	private: System::Windows::Forms::ImageList^  imageList1;
@@ -85,6 +89,11 @@ namespace Project1 {
 			extTree = new TreeExt(mylambdas->Return_Extension());
 			sizTree = new TreeSize(mylambdas->Return_Size());
 			dattree = new TreeDate(mylambdas->Return_Date());
+
+			nameTree_filtro = new TreeName(mylambdas->Return_Name());
+			extTree_filtro = new TreeExt(mylambdas->Return_Extension());
+			sizTree_filtro = new TreeSize(mylambdas->Return_Size());
+			dattree_filtro = new TreeDate(mylambdas->Return_Date());
 			
 		}
 
@@ -103,9 +112,9 @@ namespace Project1 {
 		//bool Bsearch = false;
 		//bool Brefresh = false;
 		int cont = 0;
-
-
-
+		bool Filtro_nombre = false;
+		bool Filtro_peso = false;
+	
 
 	private: System::Windows::Forms::Button^  button1;
 	protected:
@@ -364,6 +373,7 @@ namespace Project1 {
 			this->button6->TabIndex = 16;
 			this->button6->Text = L"Aceptar";
 			this->button6->UseVisualStyleBackColor = true;
+			this->button6->Click += gcnew System::EventHandler(this, &FileExplorer::button6_Click);
 			// 
 			// textBox3
 			// 
@@ -493,6 +503,9 @@ namespace Project1 {
 	{
 		//Brefresh = true;
 		//Bsearch = false;
+		Filtro_nombre = false;
+		Filtro_peso = false;
+		Cursor->Current = Cursors::AppStarting;
 
 		if (DirectoryTbx->Text->Length > 0)
 		{
@@ -719,6 +732,40 @@ namespace Project1 {
 		//if (Brefresh)
 		//{
 			cont++;
+
+
+
+			if (Filtro_nombre)
+			{
+				if (cont % 2 == 0)
+				{
+					switch (e->Column)
+					{
+					case 0:nameTree_filtro->Mostrar_Elementos_As(listView1); break;
+					case 1:extTree_filtro->Mostrar_Elementos_As(listView1); break;
+					case 2:dattree_filtro->Mostrar_Elementos_As(listView1); break;
+					case 3:sizTree_filtro->Mostrar_Elementos_As(listView1); break;
+					}
+				}
+
+				else
+				{
+					switch (e->Column)
+					{
+					case 0:nameTree_filtro->Mostrar_Elementos_Des(listView1); break;
+					case 1:extTree_filtro->Mostrar_Elementos_Des(listView1); break;
+					case 2:dattree_filtro->Mostrar_Elementos_Des(listView1); break;
+					case 3:sizTree_filtro->Mostrar_Elementos_Des(listView1); break;
+					}
+				}
+			}
+
+			if (Filtro_peso)
+			{
+
+			}
+
+			if(Filtro_nombre == false && Filtro_peso == false) {
 			if (cont % 2 == 0)
 			{
 				switch (e->Column)
@@ -741,7 +788,7 @@ namespace Project1 {
 				}
 			}
 
-		
+		}
 
 		
 
@@ -758,6 +805,8 @@ namespace Project1 {
 	{
 		//Brefresh = false;
 		//Bsearch = true;
+		Filtro_nombre = false;
+		Filtro_peso = false;
 		Cursor->Current = Cursors::AppStarting;
 
 		if (SearchTxbox->TextLength > 0 && DirectoryTbx->TextLength > 0)
@@ -853,24 +902,48 @@ namespace Project1 {
 	}
 	private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) 
 	{
-		if (Filtro1Box->SelectedIndex == 0)
+		listView1->Items->Clear();
+
+		Filtro_nombre = true;
+		Filtro_peso = false;
+
+		nameTree_filtro->Limpiar_Arbol();
+		extTree_filtro->Limpiar_Arbol();
+		dattree_filtro->Limpiar_Arbol();
+		sizTree_filtro->Limpiar_Arbol();
+
+		Cursor->Current = Cursors::AppStarting;
+
+		string palabrita = "";
+		MarshalString(textBox2->Text, palabrita);
+		if (Filtro1Box->SelectedIndex == 0)//inicia con
 		{
-				
+			nameTree->Filtrar_Elementos(palabrita, mylambdas->Return_Name_inicio(), nameTree_filtro, extTree_filtro, sizTree_filtro, dattree_filtro);
+			nameTree_filtro->Listar_Elementos();
+			extTree_filtro->Listar_Elementos();
+			dattree_filtro->Listar_Elementos();
+			sizTree_filtro->Listar_Elementos();
+			
+			nameTree_filtro->Mostrar_Elementos_As(listView1);
 		}
 
 		else if (Filtro1Box->SelectedIndex == 1)
 		{
 
 		}
-		else if (Filtro1Box->SelectedIndex == 3)
+		else if (Filtro1Box->SelectedIndex == 2)
 		{
 
 		}
 
-		else
-		{
+		Asignar_iconos();
+		Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";
 
-		}
 	}
+private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	Filtro_nombre = false;
+	Filtro_peso = true;
+}
 };
 }

@@ -45,6 +45,35 @@ public:
 			delete aux;
 		}
 	}
+
+	void Clean_List()
+	{
+		while (ini != nullptr)
+		{
+			len--;
+			Node* aux = ini;
+
+			if (len != 0)
+			{
+				
+				ini = ini->next;
+				ini->prev = nullptr;
+
+				aux->next = nullptr;
+				aux = nullptr;
+				delete aux;
+			}
+			if (len == 0)
+			{
+				aux->next = nullptr;
+				aux->prev = nullptr;
+				aux = nullptr;
+				end = aux;
+				ini = aux;
+			}
+		}
+	}
+
 	void agregar_inicio(T elem) {
 		Node* nuevo = new Node(elem);
 		nuevo->next = ini;

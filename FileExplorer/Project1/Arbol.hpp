@@ -4,6 +4,7 @@
 #include "Archivo.hpp"
 #include <iostream>
 #include <functional>
+#include <vector>
 using namespace std;
 
 template<typename T, typename Comparable = T, T Nada = 0>
@@ -85,20 +86,19 @@ private:
 		return node;
 	}
 
-	void find(Nodo *node, Comparable val)
+	void find(Nodo *node, Comparable val, vector<T>&arreglo)
 	{
 
 
 		if (node != nullptr)
 		{
+			
+			find(node->left, val,arreglo);
 			if (val == key(node->elem))
 			{
-				
-				Lista_Enlazada->agregar_final(node->elem);
-
+				arreglo.push_back(node->elem);
 			}
-			find(node->left, val);
-			find(node->right, val);
+			find(node->right, val, arreglo);
 
 		}
 	}
@@ -138,11 +138,8 @@ private:
 		
 		ListViewItem^ITEM;
 		Archivo *elemen;
-		String^ name, ^ext, ^date,^tamaño;
-		//name = gcnew String("");
-		ext = gcnew String("");
-		date = gcnew String("");
-		tamaño = gcnew String("");
+		String^ name, ^ext, ^date,^tamaño,^direccion;
+		
 		int a = 0;
 		float b = 0.0;
 
@@ -183,11 +180,13 @@ private:
 				tamaño = gcnew String(b.ToString() + " GB");
 			}
 			//tamaño = gcnew String(elemen->Get_Size().ToString());
+			direccion = gcnew String(elemen->Get_Direccion().c_str());
 
 			ITEM = gcnew ListViewItem(name);
 			ITEM->SubItems->Add(ext);
 			ITEM->SubItems->Add(date);
 			ITEM->SubItems->Add(tamaño);
+			ITEM->SubItems->Add(direccion);
 			tabla->Items->Add(ITEM);
 		}
 	}
@@ -197,11 +196,8 @@ private:
 	
 		ListViewItem^ITEM;
 		Archivo *elemen;
-		String^ name, ^ext, ^date, ^tamaño;
-		//name = gcnew String("");
-		ext = gcnew String("");
-		date = gcnew String("");
-		tamaño = gcnew String("");
+		String^ name, ^ext, ^date, ^tamaño, ^direccion;
+	
 		int a = 0;
 		float b = 0.0;
 
@@ -242,7 +238,7 @@ private:
 				b = a * 0.01;
 				tamaño = gcnew String(b.ToString() + " GB");
 			}
-
+			direccion = gcnew String(elemen->Get_Direccion().c_str());
 
 		
 
@@ -250,6 +246,7 @@ private:
 			ITEM->SubItems->Add(ext);
 			ITEM->SubItems->Add(date);
 			ITEM->SubItems->Add(tamaño);
+			ITEM->SubItems->Add(direccion);
 			tabla->Items->Add(ITEM);
 		}
 	}
@@ -390,9 +387,9 @@ public:
 		return len;
 	}
 
-	void find(Comparable val)
+	void find(Comparable val, vector<T>&arreglo)
 	{
-		return find(root, val);
+		return find(root, val,arreglo);
 	}
 
 	void Mostrar_Elementos_As(System::Windows::Forms::ListView ^tabla)

@@ -92,14 +92,22 @@ private:
 
 		if (node != nullptr)
 		{
-			
-			find(node->left, val,arreglo);
+
+			//find(node->left, val,arreglo);
 			if (val == key(node->elem))
 			{
 				arreglo.push_back(node->elem);
+				find(node->left, val,arreglo);
+			    find(node->right, val,arreglo);
 			}
-			find(node->right, val, arreglo);
-
+			if (val < key(node->elem))
+			{
+				find(node->left, val,arreglo);
+			}
+			if (val > key(node->elem))
+			{
+				find(node->right, val, arreglo);
+			}
 		}
 	}
 	//function<Comparable(T,string)>

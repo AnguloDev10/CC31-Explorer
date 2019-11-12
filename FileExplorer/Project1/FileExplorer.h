@@ -374,6 +374,7 @@ namespace Project1 {
 			this->Filtro2Box->Name = L"Filtro2Box";
 			this->Filtro2Box->Size = System::Drawing::Size(228, 39);
 			this->Filtro2Box->TabIndex = 12;
+			this->Filtro2Box->SelectedIndexChanged += gcnew System::EventHandler(this, &FileExplorer::Filtro2Box_SelectedIndexChanged);
 			// 
 			// textBox2
 			// 
@@ -862,6 +863,7 @@ namespace Project1 {
 		{
 			nameTree->Add(it);
 			extTree->Add(it);
+			sizTree->Add(it);
 		}
 
 
@@ -871,35 +873,34 @@ namespace Project1 {
 
 		listView1->Items->Clear();
 
-		//;
-		//
-		//
-		//
-
-
-
-
-
-
-
-
-
 
 		if (SearchTxbox->TextLength > 0 && DirectoryTbx->TextLength > 0)
 		{
 			string nombre = "";//criterio de busqueda
 			MarshalString(SearchTxbox->Text, nombre);
+
+			long long peso = -1;
+			int ejem = 0;
+
+			if (int::TryParse(SearchTxbox->Text, ejem))
+			{
+				peso = Convert::ToInt64(SearchTxbox->Text);
+			}
 			
 			vector<Archivo*>Busqueda;
 			
 
 			nameTree->find(nombre, Busqueda);
 			extTree->find(nombre, Busqueda);
+			if(peso != -1)
+			sizTree->find(peso, Busqueda);
 			///////////
 
 			//limpiamos para volver a usar
 			nameTree->Limpiar_Arbol();
 			extTree->Limpiar_Arbol();
+			if (peso != -1)
+			sizTree->Limpiar_Arbol();
 
 			//asignamos el vector con los elementos encontrados a nuestros arboles
 			for (auto it : Busqueda)
@@ -1151,6 +1152,8 @@ private: System::Void textBox3_KeyPress(System::Object^  sender, System::Windows
 			//Archivitos_vector.push_back(new Archivo(name, extension, size, fecha,direccion));
 		
 	}
+}
+private: System::Void Filtro2Box_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }

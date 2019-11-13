@@ -1,0 +1,72 @@
+Algoritmos y estructura de datos
+===============================
+Trabajo final
+-------------
+### Equipo de trabajo
+* Angulo Valle William
+* Izarra Carlos
+* Oscar Palermo
+
+### Introducción
+
+
+### Motivación
+
+
+
+### Problema: 
+
+
+
+### Solución:
+
+
+
+### Conclusión:
+__
+
+### Objetivos
+_Nuestro objetivo es crear una librería que pueda ordenar DataFrames y crear nuevos apartir de este de manera eficiente y eficaz con algoritmos de ordenamiento._
+
+* _Examinar los distintos tipos de estructuras de datos para poder recopilar su información para poder construir una mejor estructura._
+* _Aplicar lo aprendido en clases, para darle un correcto funcionamiento a nuestro programa._
+* _Disminuir la redundancia e inconsistencia de los datos._
+* _Evitar dificultad en el acceso a los datos._
+* _Crear e innovar en la creación del programa identificando funciones que pueden presentar un mayor rendimiento.
+### Alcance de proyecto
+
+_Mediante este proyecto, queremos emplear nuestros conocimientos en el curso, para poder implementar un programa que nos facilite el manejo de _dataframes_. Gracias a este programa podremos importar, indexar y filtrar datos. Además emplearemos algunos algoritmos de ordenamiento aprendidos en clase para ordenar los datos en las columnas. Para avanzar este proyecto, lo dividiremos en 3 hitos, en los cuales iremos avanzando diariamente, guardando y clonando el proyecto actual, gracias a GitHub. Debemos organizar y dividir tareas entre todos lo miembros del grupo para lograr terminar el proyecto a la fecha indicada y con todos los requerimientos._
+
+
+### Marco conceptual
+
+1. 
+
+2. 
+
+### Diagrama de clases
+
+![Texto alternativo](algoritmos.png)
+### Plan de trabajo detallado
+_El proyecto estará disponible para todos los integrantes del grupo; sin embargo, constará de 3 copias, y uno principal, gracias a que GitHub nos permite crear nuevas ramas podemos cambiar el código continuamente y mostrarlo a los demás integrantes del grupo. Además de esto, GitHub nos permite utilizar herramientas como los milestones e issues los cuales nos permitirán asignarnos tareas y completarlas progresivamente. Los milestones son tareas en paquetes, de esta manera estarán elaborados los entregables e hitos, mientras que las tareas que están dentro de los entregables e hitos se encontrarán dentro de los issues. De esta manera nuestro plan de trabajo será eficiente y podremos ver el avance de cada integrante._
+
+
+### Cronograma de trabajo
+
+_ _
+
+
+### Diagrama de clases de segundo nivel
+![Texto alternativo](diagrma.png)
+
+### Conclusiones
+*_ _
+
+*_ _
+
+*_EL uso del indexado nos ayuda  a tener un mayor orden en el trabajo ya que es así como podemos realizar una busqueda , ademas de el ordenamiento adecuado._
+
+### Referencias:
+CPLUSPLUS.com: http://www.cplusplus.com
+
+YouTube‎ · ‎Programación ATS: https://www.youtube.com/watch?v=ld4nzao5XAc

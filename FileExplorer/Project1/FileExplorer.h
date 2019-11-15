@@ -20,7 +20,7 @@ typedef Tree<Archivo*, string, nullptr> TreeName;
 typedef Tree<Archivo*, string, nullptr> TreeExt;
 typedef Tree<Archivo*, long long, nullptr> TreeSize;
 typedef Tree<Archivo*, long, nullptr>TreeDate;
-
+map<string, vector<Archivo>> mapeo;
 
 vector<Archivo*> jorgesgay;
 
@@ -69,6 +69,11 @@ namespace Project1 {
 	private: System::Windows::Forms::ComboBox^  PesosBox;
 	private: System::Windows::Forms::ColumnHeader^  Ubicacion;
 	private: System::Windows::Forms::Button^  button7;
+	private: System::Windows::Forms::Button^  textagregar;
+
+
+	private: System::Windows::Forms::TextBox^  textBox4;
+	private: System::Windows::Forms::ComboBox^  comboBox1;
 
 	private: System::Windows::Forms::Button^  ButtonSearch;
 
@@ -177,45 +182,44 @@ namespace Project1 {
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->PesosBox = (gcnew System::Windows::Forms::ComboBox());
 			this->button7 = (gcnew System::Windows::Forms::Button());
+			this->textagregar = (gcnew System::Windows::Forms::Button());
+			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
 			// 
 			this->button1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1.Image")));
-			this->button1->Location = System::Drawing::Point(35, 64);
-			this->button1->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->button1->Location = System::Drawing::Point(13, 27);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(69, 55);
+			this->button1->Size = System::Drawing::Size(26, 23);
 			this->button1->TabIndex = 0;
 			this->button1->UseVisualStyleBackColor = true;
 			// 
 			// button2
 			// 
 			this->button2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button2.Image")));
-			this->button2->Location = System::Drawing::Point(120, 64);
-			this->button2->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->button2->Location = System::Drawing::Point(45, 27);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(69, 55);
+			this->button2->Size = System::Drawing::Size(26, 23);
 			this->button2->TabIndex = 1;
 			this->button2->UseVisualStyleBackColor = true;
 			// 
 			// DirectoryTbx
 			// 
-			this->DirectoryTbx->Location = System::Drawing::Point(293, 74);
-			this->DirectoryTbx->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->DirectoryTbx->Location = System::Drawing::Point(110, 31);
 			this->DirectoryTbx->Name = L"DirectoryTbx";
-			this->DirectoryTbx->Size = System::Drawing::Size(1364, 38);
+			this->DirectoryTbx->Size = System::Drawing::Size(514, 20);
 			this->DirectoryTbx->TabIndex = 2;
 			this->DirectoryTbx->TextChanged += gcnew System::EventHandler(this, &FileExplorer::DirectoryTbx_TextChanged);
 			// 
 			// button3
 			// 
 			this->button3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button3.Image")));
-			this->button3->Location = System::Drawing::Point(1680, 64);
-			this->button3->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->button3->Location = System::Drawing::Point(630, 27);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(64, 62);
+			this->button3->Size = System::Drawing::Size(24, 26);
 			this->button3->TabIndex = 3;
 			this->button3->UseVisualStyleBackColor = true;
 			this->button3->Click += gcnew System::EventHandler(this, &FileExplorer::button3_Click);
@@ -223,10 +227,9 @@ namespace Project1 {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(232, 74);
-			this->pictureBox1->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->pictureBox1->Location = System::Drawing::Point(87, 31);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(45, 45);
+			this->pictureBox1->Size = System::Drawing::Size(17, 19);
 			this->pictureBox1->TabIndex = 4;
 			this->pictureBox1->TabStop = false;
 			// 
@@ -238,10 +241,9 @@ namespace Project1 {
 			});
 			this->listView1->GridLines = true;
 			this->listView1->HideSelection = false;
-			this->listView1->Location = System::Drawing::Point(35, 281);
-			this->listView1->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->listView1->Location = System::Drawing::Point(13, 118);
 			this->listView1->Name = L"listView1";
-			this->listView1->Size = System::Drawing::Size(2293, 700);
+			this->listView1->Size = System::Drawing::Size(862, 296);
 			this->listView1->TabIndex = 5;
 			this->listView1->UseCompatibleStateImageBehavior = false;
 			this->listView1->View = System::Windows::Forms::View::Details;
@@ -276,10 +278,9 @@ namespace Project1 {
 			// Cant_Elem
 			// 
 			this->Cant_Elem->AutoSize = true;
-			this->Cant_Elem->Location = System::Drawing::Point(32, 1023);
-			this->Cant_Elem->Margin = System::Windows::Forms::Padding(8, 0, 8, 0);
+			this->Cant_Elem->Location = System::Drawing::Point(12, 429);
 			this->Cant_Elem->Name = L"Cant_Elem";
-			this->Cant_Elem->Size = System::Drawing::Size(170, 32);
+			this->Cant_Elem->Size = System::Drawing::Size(64, 13);
 			this->Cant_Elem->TabIndex = 6;
 			this->Cant_Elem->Text = L"0 elementos";
 			// 
@@ -302,7 +303,7 @@ namespace Project1 {
 			// 
 			this->textBox1->Location = System::Drawing::Point(0, 0);
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 38);
+			this->textBox1->Size = System::Drawing::Size(100, 20);
 			this->textBox1->TabIndex = 0;
 			// 
 			// button4
@@ -314,10 +315,9 @@ namespace Project1 {
 			// 
 			// SearchTxbox
 			// 
-			this->SearchTxbox->Location = System::Drawing::Point(1760, 74);
-			this->SearchTxbox->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->SearchTxbox->Location = System::Drawing::Point(660, 31);
 			this->SearchTxbox->Name = L"SearchTxbox";
-			this->SearchTxbox->Size = System::Drawing::Size(346, 38);
+			this->SearchTxbox->Size = System::Drawing::Size(132, 20);
 			this->SearchTxbox->TabIndex = 7;
 			// 
 			// ButtonSearch
@@ -325,10 +325,9 @@ namespace Project1 {
 			this->ButtonSearch->BackColor = System::Drawing::Color::Transparent;
 			this->ButtonSearch->Enabled = false;
 			this->ButtonSearch->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"ButtonSearch.Image")));
-			this->ButtonSearch->Location = System::Drawing::Point(2262, 64);
-			this->ButtonSearch->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->ButtonSearch->Location = System::Drawing::Point(848, 27);
 			this->ButtonSearch->Name = L"ButtonSearch";
-			this->ButtonSearch->Size = System::Drawing::Size(67, 64);
+			this->ButtonSearch->Size = System::Drawing::Size(25, 27);
 			this->ButtonSearch->TabIndex = 8;
 			this->ButtonSearch->UseVisualStyleBackColor = false;
 			this->ButtonSearch->Click += gcnew System::EventHandler(this, &FileExplorer::ButtonSearch_Click);
@@ -336,20 +335,18 @@ namespace Project1 {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(32, 196);
-			this->label1->Margin = System::Windows::Forms::Padding(8, 0, 8, 0);
+			this->label1->Location = System::Drawing::Point(12, 82);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(143, 32);
+			this->label1->Size = System::Drawing::Size(53, 13);
 			this->label1->TabIndex = 9;
 			this->label1->Text = L"Filtrar por ";
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(1491, 193);
-			this->label2->Margin = System::Windows::Forms::Padding(8, 0, 8, 0);
+			this->label2->Location = System::Drawing::Point(559, 81);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(143, 32);
+			this->label2->Size = System::Drawing::Size(53, 13);
 			this->label2->TabIndex = 10;
 			this->label2->Text = L"Filtrar por ";
 			// 
@@ -358,10 +355,9 @@ namespace Project1 {
 			this->Filtro1Box->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->Filtro1Box->FormattingEnabled = true;
 			this->Filtro1Box->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Empieza con", L"Contiene", L"Finaliza con" });
-			this->Filtro1Box->Location = System::Drawing::Point(189, 188);
-			this->Filtro1Box->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->Filtro1Box->Location = System::Drawing::Point(71, 79);
 			this->Filtro1Box->Name = L"Filtro1Box";
-			this->Filtro1Box->Size = System::Drawing::Size(228, 39);
+			this->Filtro1Box->Size = System::Drawing::Size(88, 21);
 			this->Filtro1Box->TabIndex = 11;
 			// 
 			// Filtro2Box
@@ -369,27 +365,24 @@ namespace Project1 {
 			this->Filtro2Box->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->Filtro2Box->FormattingEnabled = true;
 			this->Filtro2Box->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Mayor a", L"Menor a", L"Igua a" });
-			this->Filtro2Box->Location = System::Drawing::Point(1649, 186);
-			this->Filtro2Box->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->Filtro2Box->Location = System::Drawing::Point(618, 78);
 			this->Filtro2Box->Name = L"Filtro2Box";
-			this->Filtro2Box->Size = System::Drawing::Size(228, 39);
+			this->Filtro2Box->Size = System::Drawing::Size(88, 21);
 			this->Filtro2Box->TabIndex = 12;
 			this->Filtro2Box->SelectedIndexChanged += gcnew System::EventHandler(this, &FileExplorer::Filtro2Box_SelectedIndexChanged);
 			// 
 			// textBox2
 			// 
-			this->textBox2->Location = System::Drawing::Point(440, 188);
-			this->textBox2->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->textBox2->Location = System::Drawing::Point(165, 79);
 			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(151, 38);
+			this->textBox2->Size = System::Drawing::Size(59, 20);
 			this->textBox2->TabIndex = 13;
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(613, 184);
-			this->button5->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->button5->Location = System::Drawing::Point(230, 77);
 			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(144, 55);
+			this->button5->Size = System::Drawing::Size(54, 23);
 			this->button5->TabIndex = 14;
 			this->button5->Text = L"Aceptar";
 			this->button5->UseVisualStyleBackColor = true;
@@ -397,10 +390,9 @@ namespace Project1 {
 			// 
 			// button6
 			// 
-			this->button6->Location = System::Drawing::Point(2185, 184);
-			this->button6->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->button6->Location = System::Drawing::Point(819, 77);
 			this->button6->Name = L"button6";
-			this->button6->Size = System::Drawing::Size(144, 55);
+			this->button6->Size = System::Drawing::Size(54, 23);
 			this->button6->TabIndex = 16;
 			this->button6->Text = L"Aceptar";
 			this->button6->UseVisualStyleBackColor = true;
@@ -408,11 +400,10 @@ namespace Project1 {
 			// 
 			// textBox3
 			// 
-			this->textBox3->Location = System::Drawing::Point(1894, 186);
-			this->textBox3->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
+			this->textBox3->Location = System::Drawing::Point(710, 78);
 			this->textBox3->MaxLength = 4;
 			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(151, 38);
+			this->textBox3->Size = System::Drawing::Size(59, 20);
 			this->textBox3->TabIndex = 15;
 			this->textBox3->TextChanged += gcnew System::EventHandler(this, &FileExplorer::textBox3_TextChanged);
 			this->textBox3->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &FileExplorer::textBox3_KeyPress);
@@ -422,27 +413,60 @@ namespace Project1 {
 			this->PesosBox->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->PesosBox->FormattingEnabled = true;
 			this->PesosBox->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"B", L"KB", L"MB", L"GB" });
-			this->PesosBox->Location = System::Drawing::Point(2062, 186);
-			this->PesosBox->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->PesosBox->Location = System::Drawing::Point(773, 78);
+			this->PesosBox->Margin = System::Windows::Forms::Padding(1);
 			this->PesosBox->Name = L"PesosBox";
-			this->PesosBox->Size = System::Drawing::Size(113, 39);
+			this->PesosBox->Size = System::Drawing::Size(45, 21);
 			this->PesosBox->TabIndex = 17;
+			this->PesosBox->SelectedIndexChanged += gcnew System::EventHandler(this, &FileExplorer::PesosBox_SelectedIndexChanged);
 			// 
 			// button7
 			// 
-			this->button7->Location = System::Drawing::Point(2117, 74);
+			this->button7->Location = System::Drawing::Point(794, 31);
+			this->button7->Margin = System::Windows::Forms::Padding(1);
 			this->button7->Name = L"button7";
-			this->button7->Size = System::Drawing::Size(134, 45);
+			this->button7->Size = System::Drawing::Size(50, 19);
 			this->button7->TabIndex = 18;
 			this->button7->Text = L"Scan";
 			this->button7->UseVisualStyleBackColor = true;
 			this->button7->Click += gcnew System::EventHandler(this, &FileExplorer::button7_Click);
 			// 
+			// textagregar
+			// 
+			this->textagregar->Location = System::Drawing::Point(480, 77);
+			this->textagregar->Name = L"textagregar";
+			this->textagregar->Size = System::Drawing::Size(54, 25);
+			this->textagregar->TabIndex = 19;
+			this->textagregar->Text = L"Add Folder";
+			this->textagregar->UseVisualStyleBackColor = true;
+			this->textagregar->Click += gcnew System::EventHandler(this, &FileExplorer::button8_Click);
+			// 
+			// textBox4
+			// 
+			this->textBox4->Location = System::Drawing::Point(316, 81);
+			this->textBox4->Name = L"textBox4";
+			this->textBox4->Size = System::Drawing::Size(72, 20);
+			this->textBox4->TabIndex = 20;
+			// 
+			// comboBox1
+			// 
+			this->comboBox1->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Empieza con", L"Contiene", L"Finaliza con" });
+			this->comboBox1->Location = System::Drawing::Point(394, 80);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(80, 21);
+			this->comboBox1->TabIndex = 21;
+			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &FileExplorer::comboBox1_SelectedIndexChanged);
+			// 
 			// FileExplorer
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(16, 31);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(2360, 1068);
+			this->ClientSize = System::Drawing::Size(893, 445);
+			this->Controls->Add(this->comboBox1);
+			this->Controls->Add(this->textBox4);
+			this->Controls->Add(this->textagregar);
 			this->Controls->Add(this->button7);
 			this->Controls->Add(this->PesosBox);
 			this->Controls->Add(this->button6);
@@ -462,7 +486,6 @@ namespace Project1 {
 			this->Controls->Add(this->DirectoryTbx);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
-			this->Margin = System::Windows::Forms::Padding(8, 7, 8, 7);
 			this->Name = L"FileExplorer";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"FileExplorer";
@@ -565,8 +588,10 @@ namespace Project1 {
 		//Bsearch = false;
 		Filtro_nombre = false;
 		Filtro_peso = false;
+		string direcc = "" ;
+		MarshalString(DirectoryTbx->Text, direcc);
 		Cursor->Current = Cursors::AppStarting;
-
+		//if(  mapeo->first =direcc || mapeo.size() == 0)
 		if (DirectoryTbx->Text->Length > 0)
 		{
 
@@ -1154,6 +1179,24 @@ private: System::Void textBox3_KeyPress(System::Object^  sender, System::Windows
 	}
 }
 private: System::Void Filtro2Box_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void button8_Click(System::Object^  sender, System::EventArgs^  e) {
+	if (textBox4->Text->Length > 0)
+	{
+
+		Cursor->Current = Cursors::AppStarting;
+		if (textBox4->Text->Substring(textBox4->Text->Length - 1) == "/")
+			textBox4->Text = textBox4->Text->Substring(0, textBox4->Text->Length - 1);
+		string add = "";
+		MarshalString(textBox4->Text, add);
+		create_directories(add);
+	}
+
+
+}
+private: System::Void PesosBox_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }

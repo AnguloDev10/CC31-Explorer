@@ -433,11 +433,11 @@ namespace Project1 {
 			// 
 			// textagregar
 			// 
-			this->textagregar->Location = System::Drawing::Point(480, 77);
+			this->textagregar->Location = System::Drawing::Point(496, 79);
 			this->textagregar->Name = L"textagregar";
-			this->textagregar->Size = System::Drawing::Size(54, 25);
+			this->textagregar->Size = System::Drawing::Size(37, 25);
 			this->textagregar->TabIndex = 19;
-			this->textagregar->Text = L"Add Folder";
+			this->textagregar->Text = L"Edit";
 			this->textagregar->UseVisualStyleBackColor = true;
 			this->textagregar->Click += gcnew System::EventHandler(this, &FileExplorer::button8_Click);
 			// 
@@ -452,7 +452,7 @@ namespace Project1 {
 			// 
 			this->comboBox1->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Empieza con", L"Contiene", L"Finaliza con" });
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Agregar Carpeta", L"Eliminar Carpeta" });
 			this->comboBox1->Location = System::Drawing::Point(394, 80);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(80, 21);
@@ -1181,15 +1181,26 @@ private: System::Void textBox3_KeyPress(System::Object^  sender, System::Windows
 private: System::Void Filtro2Box_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void button8_Click(System::Object^  sender, System::EventArgs^  e) {
+	string add = "";
+	MarshalString(textBox4->Text, add);
 	if (textBox4->Text->Length > 0)
 	{
-
 		Cursor->Current = Cursors::AppStarting;
-		if (textBox4->Text->Substring(textBox4->Text->Length - 1) == "/")
-			textBox4->Text = textBox4->Text->Substring(0, textBox4->Text->Length - 1);
-		string add = "";
-		MarshalString(textBox4->Text, add);
-		create_directories(add);
+		if (comboBox1->SelectedIndex == 0)
+		{
+			if (textBox4->Text->Substring(textBox4->Text->Length - 1) == "/")
+				textBox4->Text = textBox4->Text->Substring(0, textBox4->Text->Length - 1);
+
+			create_directories(add);
+		}
+		if (comboBox1->SelectedIndex == 0)
+		{
+			if(textBox4->Text->Substring(textBox4->Text->Length - 1) == "/")
+				textBox4->Text = textBox4->Text->Substring(0, textBox4->Text->Length - 1);
+			remove(add);
+		}
+		
+		
 	}
 
 

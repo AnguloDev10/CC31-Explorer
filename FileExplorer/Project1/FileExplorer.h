@@ -1193,7 +1193,7 @@ private: System::Void button8_Click(System::Object^  sender, System::EventArgs^ 
 
 			create_directories(add);
 		}
-		if (comboBox1->SelectedIndex == 0)
+		if (comboBox1->SelectedIndex == 1)
 		{
 			if(textBox4->Text->Substring(textBox4->Text->Length - 1) == "/")
 				textBox4->Text = textBox4->Text->Substring(0, textBox4->Text->Length - 1);

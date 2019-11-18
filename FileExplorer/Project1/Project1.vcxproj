@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClInclude Include="Arbol.hpp" />
     <ClInclude Include="Archivo.hpp" />
+    <ClInclude Include="ClassFilmap.h" />
     <ClInclude Include="FileExplorer.h">
       <FileType>CppForm</FileType>
     </ClInclude>

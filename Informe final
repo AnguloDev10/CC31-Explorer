@@ -1,19 +1,14 @@
 Algoritmos y estructura de datos
 ===============================
-Trabajo Final FileExp
+Trabajo final
 -------------
-### Integrantes del equipo
+### Equipo de trabajo
 * Angulo Valle William
-* Izarra Ticlla Carlos Eduardo u20181c406
-* Flores Oscar 
-
-### Introducción
-El presente trabajo se realizó con el objetivo de aplicar los conocimientos aprendidos durante el curso
-de Algoritmos y Estructuras de datos en la realización de una aplicación para el manejo de grandes cantidades
-de datos (archivos) de manera eficiente e ingeniosa.
+* Izarra Carlos
+* Flores Palermo Oscar 
 
 ###Indice
-
+Introducción
 Objetivo del Estudiante
 Capítulo 1: Presentación
 Capítulo 2: Marco conceptual
@@ -24,6 +19,10 @@ Conclusiones
 Bibliografía
 Anexos
 
+### Introducción
+
+en el siguiente trabajo se realizo una replica de un buscador dentro de los archivos de la memoria de la computadora y mediante
+este informe se dara a conocer los metodos y procedimientos con los que se pudo obtener el resultado
 
 ###Objetivo del Estudiante
 
@@ -31,11 +30,17 @@ Implementar uh programa que ayude a facilitar la agilización de la busqueda de 
 
 ###Capítulo 1: Presentación
 
-
+Explorer es un explorador de archivos en el cual puede buscar de manera eficiente y rapida la localizacion de archivos, tambien 
+puede filtrarlos por busqueda de una palaba letra extension y peso. Al hacer el escaneo permite encontrar más rapido la localizacion
+ciertos archivos dando la direccion de donde esta guardado, ademas puede agregar y elimanar carpertas.
 
 ###Capítulo 2: Marco conceptual
 
-
+-lambdas
+-arboles
+-listas
+-recusividad
+-vectores
 
 ###Capítulo 3: Diseño del proyecto
 
@@ -43,10 +48,10 @@ Implementar uh programa que ayude a facilitar la agilización de la busqueda de 
 
 ###Capítulo 4: Diseño del producto
 
-
+Un explorador que permite facilitar la tarea de busqueda de archivos, dando varias opciones de como se puede buscar, filtrar 
+los archivos y con una interfaz facil de entender.
 
 ###Capítulo 5: Diseño del proceso de desarrollo de la solución
-
 
 
 
@@ -64,7 +69,8 @@ en el programa los arboles, listas, vectores, recusividad.
 
 
 ### Conclusión:
-__
+
+
 
 ### Objetivos
 _Nuestro objetivo es crear una librería que pueda ordenar DataFrames y crear nuevos apartir de este de manera eficiente y eficaz con algoritmos de ordenamiento._
@@ -78,12 +84,6 @@ _Nuestro objetivo es crear una librería que pueda ordenar DataFrames y crear nu
 
 _Mediante este proyecto, queremos emplear nuestros conocimientos en el curso, para poder implementar un programa que nos facilite el manejo de _dataframes_. Gracias a este programa podremos importar, indexar y filtrar datos. Además emplearemos algunos algoritmos de ordenamiento aprendidos en clase para ordenar los datos en las columnas. Para avanzar este proyecto, lo dividiremos en 3 hitos, en los cuales iremos avanzando diariamente, guardando y clonando el proyecto actual, gracias a GitHub. Debemos organizar y dividir tareas entre todos lo miembros del grupo para lograr terminar el proyecto a la fecha indicada y con todos los requerimientos._
 
-
-### Marco conceptual
-
-1. 
-
-2. 
 
 ### Diagrama de clases
 
@@ -105,15 +105,11 @@ _ _
 
 *_ _
 
-*_EL uso del indexado nos ayuda  a tener un mayor orden en el trabajo ya que es así como podemos realizar una busqueda , 
-ademas de el ordenamiento adecuado._
+*_EL uso del indexado nos ayuda  a tener un mayor orden en el trabajo ya que es así como podemos realizar una busqueda , ademas de el ordenamiento adecuado._
 
 ### Referencias:
-Windows Forms (2017). Documentation. Recuperado de: https://docs.microsoft.com/en-us/dotnet/framework/winforms/
-CPLUSPLUS. Vector. Recuperado de: http://www.cplusplus.com/reference/vector/vector/?kw=vector
-CPLUSPLUS. std::string. Recuperado de:http://www.cplusplus.com/reference/string/string/?kw=string
-CPPREFERENCE. Filesystem library. Recuperado de: https://en.cppreference.com/w/cpp/experimental/fs
+CPLUSPLUS.com: http://www.cplusplus.com
 ###Bibliografía
 ###Anexos
 
-YouTube Programación ATS: https://www.youtube.com/watch?v=ld4nzao5XAc
+YouTube‎ · ‎Programación ATS: https://www.youtube.com/watch?v=ld4nzao5XAc

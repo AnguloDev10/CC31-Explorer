@@ -315,10 +315,11 @@ namespace Project1 {
 			// 
 			// SearchTxbox
 			// 
-			this->SearchTxbox->Location = System::Drawing::Point(660, 31);
+			this->SearchTxbox->Location = System::Drawing::Point(714, 31);
 			this->SearchTxbox->Name = L"SearchTxbox";
 			this->SearchTxbox->Size = System::Drawing::Size(132, 20);
 			this->SearchTxbox->TabIndex = 7;
+			this->SearchTxbox->TextChanged += gcnew System::EventHandler(this, &FileExplorer::SearchTxbox_TextChanged);
 			// 
 			// ButtonSearch
 			// 
@@ -422,7 +423,8 @@ namespace Project1 {
 			// 
 			// button7
 			// 
-			this->button7->Location = System::Drawing::Point(794, 31);
+			this->button7->Enabled = false;
+			this->button7->Location = System::Drawing::Point(659, 31);
 			this->button7->Margin = System::Windows::Forms::Padding(1);
 			this->button7->Name = L"button7";
 			this->button7->Size = System::Drawing::Size(50, 19);
@@ -762,6 +764,7 @@ namespace Project1 {
 	}
 	private: System::Void DirectoryTbx_TextChanged(System::Object^  sender, System::EventArgs^  e)
 	{
+		button7->Enabled = true;
 		if (DirectoryTbx->Text->Length > 0)
 		{
 			//validamos direccion
@@ -876,8 +879,8 @@ namespace Project1 {
 	}
 	private: System::Void ButtonSearch_Click(System::Object^  sender, System::EventArgs^  e)
 	{
-		//Brefresh = false;
-		//Bsearch = true;
+		
+		
 
 		nameTree->Limpiar_Arbol();
 		extTree->Limpiar_Arbol();
@@ -894,7 +897,7 @@ namespace Project1 {
 
 		Filtro_nombre = false;
 		Filtro_peso = false;
-		Cursor->Current = Cursors::AppStarting;
+		
 
 		listView1->Items->Clear();
 
@@ -924,7 +927,6 @@ namespace Project1 {
 			//limpiamos para volver a usar
 			nameTree->Limpiar_Arbol();
 			extTree->Limpiar_Arbol();
-			if (peso != -1)
 			sizTree->Limpiar_Arbol();
 
 			//asignamos el vector con los elementos encontrados a nuestros arboles
@@ -990,7 +992,7 @@ namespace Project1 {
 
 				nameTree_filtro->Mostrar_Elementos_As(listView1);
 			}
-			else if (Filtro1Box->SelectedIndex == 2)
+			else if (Filtro1Box->SelectedIndex == 2)//termina con
 			{
 				nameTree->Filtrar_Elementos(palabrita, mylambdas->return_name_finaliza(), nameTree_filtro, extTree_filtro, sizTree_filtro, dattree_filtro);
 				nameTree_filtro->Listar_Elementos();
@@ -1001,7 +1003,7 @@ namespace Project1 {
 				nameTree_filtro->Mostrar_Elementos_As(listView1);
 			}
 		}
-		else
+		if(textBox2->Text->Length == 0)
 		{
 			Filtro_nombre = false;
 			Filtro_peso = false;
@@ -1036,10 +1038,10 @@ private: System::Void button6_Click(System::Object^  sender, System::EventArgs^ 
 		case 0:numerito /= 1; break;
 		case 1:numerito *=1024; break;
 		case 2:numerito *=(1024*1024); break;
-		case 4:numerito *= (1024*1024*1024); break;
+		case 3:numerito *= (1024*1024*1024); break;
 		}
 
-
+		
 
 
 		if (Filtro2Box->SelectedIndex == 0)//peso mayor a
@@ -1077,7 +1079,7 @@ private: System::Void button6_Click(System::Object^  sender, System::EventArgs^ 
 	}
 
 
-	else
+	if(textBox3->Text->Length==0)
 	{
 		Filtro_nombre = false;
 		Filtro_peso = false;
@@ -1108,7 +1110,8 @@ private: System::Void textBox3_KeyPress(System::Object^  sender, System::Windows
 }
 	private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e)
 	{
-		ButtonSearch->Enabled = true;
+		button7->Enabled = false;
+		Cursor->Current = Cursors::AppStarting;
 
 		jorgesgay.clear();
 		nameTree->Limpiar_Arbol();
@@ -1208,6 +1211,13 @@ private: System::Void button8_Click(System::Object^  sender, System::EventArgs^ 
 private: System::Void PesosBox_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void comboBox1_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void SearchTxbox_TextChanged(System::Object^  sender, System::EventArgs^  e) 
+{
+	if (SearchTxbox->Text->Length == 0)
+		ButtonSearch->Enabled = false;
+	else 
+		ButtonSearch->Enabled = true;
 }
 };
 }

@@ -21,8 +21,8 @@ Anexos
 
 ### Introducción
 
-en el siguiente trabajo se realizo una replica de un buscador dentro de los archivos de la memoria de la computadora y mediante
-este informe se dara a conocer los metodos y procedimientos con los que se pudo obtener el resultado
+En el siguiente trabajo se realizo una replica de un buscador dentro de los archivos de la memoria de la computadora y mediante este
+informe se dara a conocer los metodos y procedimientos con los que se pudo obtener el resultado.
 
 ###Objetivo del Estudiante
 
@@ -36,15 +36,17 @@ ciertos archivos dando la direccion de donde esta guardado, ademas puede agregar
 
 ###Capítulo 2: Marco conceptual
 
--lambdas
--arboles
--listas
--recusividad
--vectores
+-Lambdas
+-Arboles
+-Listas
+-Recursividad
+-Vectores
+
 
 ###Capítulo 3: Diseño del proyecto
 
-
+Este proyecto está diseñado para lograr simplificar la búsqueda de los archivos necesarios de manera rápida y sencilla, también
+vimos como intentar una interfaz sencilla para la comprensión rápida del usuario con el proyecto.
 
 ###Capítulo 4: Diseño del producto
 
@@ -53,8 +55,6 @@ los archivos y con una interfaz facil de entender.
 
 ###Capítulo 5: Diseño del proceso de desarrollo de la solución
 
-
-
 ### Motivación
 
 Nuestra motivacion fue hacer un trabajo que pueda facilitar la busqueda de los archivos y el dasafio que presentaba al implementar 
@@ -62,51 +62,60 @@ en el programa los arboles, listas, vectores, recusividad.
 
 ### Problema: 
 
-
+En varios puntos tuvimos problemas con la implementación del código:
+-Como en las listas en un punto tuvimos una deficiencia para agregar en la parte final de la lista. 
+-También en las fechas no sabíamos cómo hacerlo y no queríamos poner letras y solo números. 
+-En los árboles en la deficiencia del tiempo que se demoraba mucho en escanear y buscar.
 
 ### Solución:
 
-
+Las soluciones que terminamos implementando en el código:
+-Crear un auxiliar dándole un elemento y poniendo que cuando sea de tamaño 0 sea el inicial y el final a la vez y luego que siga
+para cualquier tamaño que agregue como el siguiente del último.
+-Le pedimos ayuda al profesor para poder averiguar las fechas de su última edición del archivo, y tuvimos que convertirlo en número
+las palabras.
+-Por la sugerencia del profesor decidimos separa el escanear y buscar en dos botones y que harían su función y mejoramos el método de
+buscar en el árbol.
 
 ### Conclusión:
 
-
+El proyecto nos ayudó a aprender más sobre nuestra carrera, además esto nos ayudara a aprender cómo hacer este tipo de proyectos,
+pero en mayor escala en un futuro y poder contribuir al desarrollo de la tecnología venidera.
+EL uso del indexado nos ayuda  a tener un mayor orden en el trabajo ya que es así como podemos realizar una busqueda , 
+ademas de el ordenamiento adecuado
 
 ### Objetivos
-_Nuestro objetivo es crear una librería que pueda ordenar DataFrames y crear nuevos apartir de este de manera eficiente y eficaz con algoritmos de ordenamiento._
+Nuestro objetivo es crear una librería que pueda ordenar DataFrames y crear nuevos apartir de este de manera eficiente y eficaz con 
+algoritmos de ordenamiento.
 
-* _Examinar los distintos tipos de estructuras de datos para poder recopilar su información para poder construir una mejor estructura._
-* _Aplicar lo aprendido en clases, para darle un correcto funcionamiento a nuestro programa._
-* _Disminuir la redundancia e inconsistencia de los datos._
-* _Evitar dificultad en el acceso a los datos._
-* _Crear e innovar en la creación del programa identificando funciones que pueden presentar un mayor rendimiento.
+* Examinar los distintos tipos de estructuras de datos para poder recopilar su información para poder construir una mejor estructura.
+* Aplicar lo aprendido en clases, para darle un correcto funcionamiento a nuestro programa.
+* Disminuir la redundancia e inconsistencia de los datos.
+* Evitar dificultad en el acceso a los datos.
+* Crear e innovar en la creación del programa identificando funciones que pueden presentar un mayor rendimiento.
 ### Alcance de proyecto
 
-_Mediante este proyecto, queremos emplear nuestros conocimientos en el curso, para poder implementar un programa que nos facilite el manejo de _dataframes_. Gracias a este programa podremos importar, indexar y filtrar datos. Además emplearemos algunos algoritmos de ordenamiento aprendidos en clase para ordenar los datos en las columnas. Para avanzar este proyecto, lo dividiremos en 3 hitos, en los cuales iremos avanzando diariamente, guardando y clonando el proyecto actual, gracias a GitHub. Debemos organizar y dividir tareas entre todos lo miembros del grupo para lograr terminar el proyecto a la fecha indicada y con todos los requerimientos._
+Mediante este proyecto, queremos emplear nuestros conocimientos en el curso, para poder implementar un programa que nos facilite
+el manejo de _dataframes_. Gracias a este programa podremos importar, indexar y filtrar datos. Además emplearemos algunos algoritmos
+de ordenamiento aprendidos en clase para ordenar los datos en las columnas. Para avanzar este proyecto, lo dividiremos en 3 hitos, en
+los cuales iremos avanzando diariamente, guardando y clonando el proyecto actual, gracias a GitHub. Debemos organizar y dividir tareas
+entre todos lo miembros del grupo para lograr terminar el proyecto a la fecha indicada y con todos los requerimientos.
 
 
 ### Diagrama de clases
 
 ![Texto alternativo](algoritmos.png)
+
 ### Plan de trabajo detallado
-_El proyecto estará disponible para todos los integrantes del grupo; sin embargo, constará de 3 copias, y uno principal, gracias a que GitHub nos permite crear nuevas ramas podemos cambiar el código continuamente y mostrarlo a los demás integrantes del grupo. Además de esto, GitHub nos permite utilizar herramientas como los milestones e issues los cuales nos permitirán asignarnos tareas y completarlas progresivamente. Los milestones son tareas en paquetes, de esta manera estarán elaborados los entregables e hitos, mientras que las tareas que están dentro de los entregables e hitos se encontrarán dentro de los issues. De esta manera nuestro plan de trabajo será eficiente y podremos ver el avance de cada integrante._
-
-
-### Cronograma de trabajo
-
-_ _
-
+El proyecto estará disponible para todos los integrantes del grupo; sin embargo, constará de 3 copias, y uno principal, gracias a
+que GitHub nos permite crear nuevas ramas podemos cambiar el código continuamente y mostrarlo a los demás integrantes del grupo. 
+Además de esto, GitHub nos permite utilizar herramientas como los milestones e issues los cuales nos permitirán asignarnos tareas y
+completarlas progresivamente. Los milestones son tareas en paquetes, de esta manera estarán elaborados los entregables e hitos, mientras
+que las tareas que están dentro de los entregables e hitos se encontrarán dentro de los issues. De esta manera nuestro plan de trabajo
+será eficiente y podremos ver el avance de cada integrante.
 
 ### Diagrama de clases de segundo nivel
 ![Texto alternativo](diagrma.png)
-
-### Conclusiones
-*_ _
-
-*_ _
-
-*_EL uso del indexado nos ayuda  a tener un mayor orden en el trabajo ya que es así como podemos realizar una busqueda , 
-ademas de el ordenamiento adecuado._
 
 ### Referencias:
 Windows Forms (2017). Documentation. Recuperado de: https://docs.microsoft.com/en-us/dotnet/framework/winforms/
@@ -115,4 +124,5 @@ CPLUSPLUS. std::string. Recuperado de:http://www.cplusplus.com/reference/string/
 CPPREFERENCE. Filesystem library. Recuperado de: https://en.cppreference.com/w/cpp/experimental/fs
 ###Bibliografía
 ###Anexos
+
 YouTube Programación ATS: https://www.youtube.com/watch?v=ld4nzao5XAc

@@ -105,11 +105,14 @@ _ _
 
 *_ _
 
-*_EL uso del indexado nos ayuda  a tener un mayor orden en el trabajo ya que es así como podemos realizar una busqueda , ademas de el ordenamiento adecuado._
+*_EL uso del indexado nos ayuda  a tener un mayor orden en el trabajo ya que es así como podemos realizar una busqueda , 
+ademas de el ordenamiento adecuado._
 
 ### Referencias:
-CPLUSPLUS.com: http://www.cplusplus.com
+Windows Forms (2017). Documentation. Recuperado de: https://docs.microsoft.com/en-us/dotnet/framework/winforms/
+CPLUSPLUS. Vector. Recuperado de: http://www.cplusplus.com/reference/vector/vector/?kw=vector
+CPLUSPLUS. std::string. Recuperado de:http://www.cplusplus.com/reference/string/string/?kw=string
+CPPREFERENCE. Filesystem library. Recuperado de: https://en.cppreference.com/w/cpp/experimental/fs
 ###Bibliografía
 ###Anexos
-
-YouTube‎ · ‎Programación ATS: https://www.youtube.com/watch?v=ld4nzao5XAc
+YouTube Programación ATS: https://www.youtube.com/watch?v=ld4nzao5XAc

@@ -20,9 +20,9 @@ typedef Tree<Archivo*, string, nullptr> TreeName;
 typedef Tree<Archivo*, string, nullptr> TreeExt;
 typedef Tree<Archivo*, long long, nullptr> TreeSize;
 typedef Tree<Archivo*, long, nullptr>TreeDate;
-map<string, vector<Archivo>> mapeo;
 
-vector<Archivo*> jorgesgay;
+
+vector<Archivo*> GlobalVector;
 
 namespace Project1 {
 
@@ -74,6 +74,8 @@ namespace Project1 {
 
 	private: System::Windows::Forms::TextBox^  textBox4;
 	private: System::Windows::Forms::ComboBox^  comboBox1;
+	private: System::Windows::Forms::PictureBox^  pictureBox2;
+	private: System::Windows::Forms::Label^  label3;
 
 	private: System::Windows::Forms::Button^  ButtonSearch;
 
@@ -185,7 +187,10 @@ namespace Project1 {
 			this->textagregar = (gcnew System::Windows::Forms::Button());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -208,6 +213,8 @@ namespace Project1 {
 			// 
 			// DirectoryTbx
 			// 
+			this->DirectoryTbx->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->DirectoryTbx->Location = System::Drawing::Point(110, 31);
 			this->DirectoryTbx->Name = L"DirectoryTbx";
 			this->DirectoryTbx->Size = System::Drawing::Size(514, 20);
@@ -278,7 +285,7 @@ namespace Project1 {
 			// Cant_Elem
 			// 
 			this->Cant_Elem->AutoSize = true;
-			this->Cant_Elem->Location = System::Drawing::Point(12, 429);
+			this->Cant_Elem->Location = System::Drawing::Point(14, 426);
 			this->Cant_Elem->Name = L"Cant_Elem";
 			this->Cant_Elem->Size = System::Drawing::Size(64, 13);
 			this->Cant_Elem->TabIndex = 6;
@@ -435,17 +442,17 @@ namespace Project1 {
 			// 
 			// textagregar
 			// 
-			this->textagregar->Location = System::Drawing::Point(496, 79);
+			this->textagregar->Location = System::Drawing::Point(487, 77);
 			this->textagregar->Name = L"textagregar";
 			this->textagregar->Size = System::Drawing::Size(37, 25);
 			this->textagregar->TabIndex = 19;
-			this->textagregar->Text = L"Edit";
+			this->textagregar->Text = L"OK";
 			this->textagregar->UseVisualStyleBackColor = true;
 			this->textagregar->Click += gcnew System::EventHandler(this, &FileExplorer::button8_Click);
 			// 
 			// textBox4
 			// 
-			this->textBox4->Location = System::Drawing::Point(316, 81);
+			this->textBox4->Location = System::Drawing::Point(334, 79);
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(72, 20);
 			this->textBox4->TabIndex = 20;
@@ -454,18 +461,40 @@ namespace Project1 {
 			// 
 			this->comboBox1->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Agregar Carpeta", L"Eliminar Carpeta" });
-			this->comboBox1->Location = System::Drawing::Point(394, 80);
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Agregar", L"Eliminar" });
+			this->comboBox1->Location = System::Drawing::Point(412, 78);
 			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(80, 21);
+			this->comboBox1->Size = System::Drawing::Size(69, 21);
 			this->comboBox1->TabIndex = 21;
 			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &FileExplorer::comboBox1_SelectedIndexChanged);
+			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
+			this->pictureBox2->Location = System::Drawing::Point(311, 80);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(17, 19);
+			this->pictureBox2->TabIndex = 22;
+			this->pictureBox2->TabStop = false;
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(17, 466);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(237, 13);
+			this->label3->TabIndex = 23;
+			this->label3->Text = L"Desarrollado por Izarra y Angulo (label anti copia)";
+			this->label3->Click += gcnew System::EventHandler(this, &FileExplorer::label3_Click);
 			// 
 			// FileExplorer
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::SystemColors::GradientActiveCaption;
 			this->ClientSize = System::Drawing::Size(893, 445);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->textBox4);
 			this->Controls->Add(this->textagregar);
@@ -488,11 +517,14 @@ namespace Project1 {
 			this->Controls->Add(this->DirectoryTbx);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->MaximizeBox = false;
 			this->Name = L"FileExplorer";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"FileExplorer";
+			this->Text = L"File Explorer";
 			this->Load += gcnew System::EventHandler(this, &FileExplorer::FileExplorer_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -576,6 +608,7 @@ namespace Project1 {
 		listView1->SmallImageList = imageList1;
 		listView1->AllowColumnReorder = false;
 		listView1->AllowDrop = false;
+		comboBox1->SelectedIndex = 0;
 	}
 
 	
@@ -588,6 +621,7 @@ namespace Project1 {
 	{
 		//Brefresh = true;
 		//Bsearch = false;
+		textagregar->Enabled = true;
 		Filtro_nombre = false;
 		Filtro_peso = false;
 		string direcc = "" ;
@@ -887,7 +921,7 @@ namespace Project1 {
 		sizTree->Limpiar_Arbol();
 		dattree->Limpiar_Arbol();
        
-		for (auto it : jorgesgay)
+		for (auto it : GlobalVector)
 		{
 			nameTree->Add(it);
 			extTree->Add(it);
@@ -950,6 +984,7 @@ namespace Project1 {
 			Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";
 		
 			Busqueda.clear();
+			SearchTxbox->Text = "";
 		}
 
 	}
@@ -1088,6 +1123,7 @@ private: System::Void button6_Click(System::Object^  sender, System::EventArgs^ 
 
 	Asignar_iconos();
 	Cant_Elem->Text = listView1->Items->Count.ToString() + " elementos";
+	
 }
 private: System::Void textBox3_TextChanged(System::Object^  sender, System::EventArgs^  e)
 {
@@ -1111,9 +1147,10 @@ private: System::Void textBox3_KeyPress(System::Object^  sender, System::Windows
 	private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e)
 	{
 		button7->Enabled = false;
+		textagregar->Enabled = false;
 		Cursor->Current = Cursors::AppStarting;
 
-		jorgesgay.clear();
+		GlobalVector.clear();
 		nameTree->Limpiar_Arbol();
 		extTree->Limpiar_Arbol();
 		sizTree->Limpiar_Arbol();
@@ -1170,40 +1207,40 @@ private: System::Void textBox3_KeyPress(System::Object^  sender, System::Windows
 			name = remove_extension(name);
 			extension = remove_name(extension);
 			if (extension == "JPG") extension = "jpg";
-
-			//if(name == nombre || extension == nombre)
-
-
-			//nameTree->Add(new Archivo(name, extension, size, fecha, direccion));
-			//extTree->Add(new Archivo(name, extension, size, fecha, direccion));
-			jorgesgay.push_back(new Archivo(name, extension, size, fecha, direccion));
-			//Archivitos_vector.push_back(new Archivo(name, extension, size, fecha,direccion));
+			GlobalVector.push_back(new Archivo(name, extension, size, fecha, direccion));
+			
 		
 	}
 }
 private: System::Void Filtro2Box_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void button8_Click(System::Object^  sender, System::EventArgs^  e) {
+	string directory = "";
 	string add = "";
 	MarshalString(textBox4->Text, add);
+	MarshalString(DirectoryTbx->Text, directory);
 	if (textBox4->Text->Length > 0)
 	{
 		Cursor->Current = Cursors::AppStarting;
+		directory = directory + "/" + add;
+
+
 		if (comboBox1->SelectedIndex == 0)
 		{
 			if (textBox4->Text->Substring(textBox4->Text->Length - 1) == "/")
 				textBox4->Text = textBox4->Text->Substring(0, textBox4->Text->Length - 1);
 
-			create_directories(add);
+			create_directories(directory);
 		}
 		if (comboBox1->SelectedIndex == 1)
 		{
 			if(textBox4->Text->Substring(textBox4->Text->Length - 1) == "/")
 				textBox4->Text = textBox4->Text->Substring(0, textBox4->Text->Length - 1);
-			remove(add);
+			remove(directory);
 		}
 		
-		
+		button3->PerformClick();
+		textBox4->Text = "";
 	}
 
 
@@ -1218,6 +1255,8 @@ private: System::Void SearchTxbox_TextChanged(System::Object^  sender, System::E
 		ButtonSearch->Enabled = false;
 	else 
 		ButtonSearch->Enabled = true;
+}
+private: System::Void label3_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }
